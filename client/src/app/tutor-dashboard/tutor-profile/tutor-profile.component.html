@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-body p-0">
+      <div class="row g-0">
+        <!-- Sidebar con imagen y nombre -->
+        <div class="col-md-4 bg-primary text-white text-center p-4 d-flex flex-column align-items-center justify-content-center">
+          <img [src]="tutor.foto || '/assets/default-profile.png'" 
+               alt="Tutor Profile" 
+               class="img-fluid rounded-circle border border-white mb-3" 
+               width="150" height="150">
+          <h4>Bienvenido, {{ tutor.nombre }} {{ tutor.apellido }}</h4>
+        </div>
+        <!-- Contenido principal: información y formulario -->
+        <div class="col-md-8 p-4">
+          <h2 class="mb-3"><i class="fas fa-info-circle me-2"></i>Información Personal</h2>
+          <p><i class="fas fa-envelope me-2"></i><strong>Correo Institucional:</strong> {{ tutor.email }}</p>
+          <p><i class="fas fa-calendar-alt me-2"></i><strong>Fecha de Nacimiento:</strong> {{ tutor.fecha_nacimiento | date:'longDate' }}</p>
+          
+          <hr class="my-4">
+          
+          <h2 class="mb-3"><i class="fas fa-edit me-2"></i>Actualizar Información</h2>
+          <form (ngSubmit)="saveChanges()" #contactForm="ngForm">
+            <div class="mb-3">
+              <label class="form-label"><i class="fas fa-phone me-2"></i>Número de Contacto:</label>
+              <input type="tel"
+                     class="form-control"
+                     [(ngModel)]="tutor.numero_contacto"
+                     name="numero_contacto"
+                     pattern="[0-9]{10}"
+                     required>
+              <div *ngIf="contactForm.submitted && contactForm.controls.numero_contacto?.invalid" class="text-danger">
+                El número de contacto debe contener exactamente 10 dígitos numéricos.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="fas fa-graduation-cap me-2"></i>Carrera:</label>
+              <input type="text"
+                     class="form-control"
+                     [(ngModel)]="tutor.carrera"
+                     name="carrera"
+                     required>
+              <div *ngIf="contactForm.submitted && contactForm.controls.carrera?.invalid" class="text-danger">
+                El campo carrera es obligatorio.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="fas fa-image me-2"></i>Subir Foto de Perfil:</label>
+              <input type="file" class="form-control" (change)="onFileSelected($event)">
+            </div>
+            <button type="submit" class="btn btn-success w-100">
+              <i class="fas fa-save me-2"></i>Guardar Cambios
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
