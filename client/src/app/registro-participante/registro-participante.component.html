@@ -1,77 +1,101 @@
-<div class="registro-container">
-    <h2 class="mb-4 text-center">Registro de Participante</h2>
+<div class="background-container">
+    <div class="logout-btn-container">
+        <button class="btn btn-outline-danger" >
+            <i class="bi bi-box-arrow-right me-1"></i> Iniciar Sesión
+        </button>
+    </div>
 
-    <!-- Formulario de registro -->
-    <form (ngSubmit)="onRegister(registroForm)" #registroForm="ngForm" class="p-4 border rounded bg-light">
-        <div class="form-group mb-3">
-            <label for="correo">Correo Personal</label>             
-            <input type="email" id="correo" name="correo" class="form-control" 
-                [(ngModel)]="correo"
-                #correoInput="ngModel" 
-                [ngClass]="{'is-invalid': correoInput.invalid && correoInput.touched}" 
-                required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-                required minlength="2" maxlength="35" placeholder="Ingresa tu correo" />
-            <div *ngIf="correoInput.invalid && correoInput.touched" class="text-danger small mt-1">
-                Ingresa un correo válido
-            </div>
-        </div>
+    <div class="registro-container glass-card">
 
-        <div class="form-group mb-3">
-            <label for="nombres">Nombres</label>
-            <input type="text" id="nombres" name="nombres" class="form-control" 
-                [(ngModel)]="nombres"
-                #nombresInput="ngModel"  
-                [ngClass]="{'is-invalid': nombresInput.invalid && nombresInput.touched}"
-                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required minlength="2" maxlength="30" placeholder="Ingresa tus nombres" />
-            <div *ngIf="nombresInput.invalid && nombresInput.touched" class="text-danger small mt-1">
-                Los nombres deben tener al menos 2 caracteres, no debe contener números.
-            </div>
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="apellidos">Apellidos</label>
-            <input type="text" id="apellidos" name="apellidos" class="form-control" 
-                [(ngModel)]="apellidos"
-                #apellidosInput="ngModel" 
-                [ngClass]="{'is-invalid': apellidosInput.invalid && apellidosInput.touched}"
-                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required minlength="2" maxlength="30" placeholder="Ingresa tus apellidos" />
-            <div *ngIf="apellidosInput.invalid && apellidosInput.touched"  class="text-danger small mt-1" >
-                Los apellidos deben tener al menos 2 caracteres, debe contener números.
-            </div>
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="contrasena">Contraseña</label>
-            <div class="input-group">
-                <input [type]="showPassword ? 'text' : 'password'" id="contrasena" name="contrasena"
-                    class="form-control" 
-                    [(ngModel)]="contrasena" 
-                    #contrasenaInput="ngModel" 
-                    [ngClass]="{'is-invalid': contrasenaInput.invalid && contrasenaInput.touched}"
-                    required minlength="8" maxlength="12" placeholder="Ingresa tu contraseña" />
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
-                        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-                    </button>
+        <h2 class="mb-4 text-center">Registro de Participante</h2>
+        <!-- Formulario de registro -->
+        <form (ngSubmit)="onRegister(registroForm)" #registroForm="ngForm" class="p-4 border rounded bg-light">
+            <div class="form-group mb-3">
+                <label for="correoPersonal">Correo Personal</label>
+                <input type="email" id="correoPersonal" name="correoPersonal" class="form-control"
+                    [(ngModel)]="correoPersonal" #correoInput="ngModel"
+                    [ngClass]="{'is-invalid': correoInput.invalid && correoInput.touched}" required
+                    pattern="^[a-zA-Z0-9._%+-]+@((gmail|hotmail|yahoo)\.com|([a-zA-Z0-9._-]+\.)?)$" required
+                    minlength="13" maxlength="35" placeholder="Ingresa tu correo" />
+                <div *ngIf="correoInput.invalid && correoInput.touched" class="text-danger small mt-1">
+                    Ingresa un correo válido con los dominios: gmail.com, hotmail.com o yahoo.com. Al menos
+                    13 caracteres.
                 </div>
-                <!-- Alerta
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="nombres">Nombres</label>
+                <input type="text" id="nombres" name="nombres" class="form-control" [(ngModel)]="nombres"
+                    #nombresInput="ngModel" [ngClass]="{'is-invalid': nombresInput.invalid && nombresInput.touched}"
+                    pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required minlength="10" maxlength="30"
+                    placeholder="Ingresa tus nombres" />
+                <div *ngIf="nombresInput.invalid && nombresInput.touched" class="text-danger small mt-1">
+                    Los nombres deben tener al menos 10 caracteres, no debe contener números o caracteres especiales.
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" name="apellidos" class="form-control" [(ngModel)]="apellidos"
+                    #apellidosInput="ngModel"
+                    [ngClass]="{'is-invalid': apellidosInput.invalid && apellidosInput.touched}"
+                    pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required minlength="10" maxlength="30"
+                    placeholder="Ingresa tus apellidos" />
+                <div *ngIf="apellidosInput.invalid && apellidosInput.touched" class="text-danger small mt-1">
+                    Los apellidos deben tener al menos 10 caracteres, no debe contener números o caracteres especiales.
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="contrasena">Contraseña</label>
+                <div class="input-group">
+                    <input [type]="showPassword ? 'text' : 'password'" id="contrasena" name="contrasena"
+                        class="form-control" [(ngModel)]="contrasena" #contrasenaInput="ngModel"
+                        [ngClass]="{'is-invalid': contrasenaInput.invalid && contrasenaInput.touched}" required
+                        minlength="8" maxlength="12" placeholder="Ingresa tu contraseña" />
+
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+                            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                        </button>
+                    </div>
+                    <!-- Alerta
                 <div *ngIf="formSubmitted && registroForm.invalid" class="alert alert-danger mt-3">
                     Todos los campos deben ser completados correctamente.
                 </div>-->
+                </div>
+                <div *ngIf="contrasenaInput.invalid && contrasenaInput.touched" class="text-danger small mt-1">
+                    La contraseña debe tener entre 8 y 12 caracteres.
+                </div>
             </div>
-            <div *ngIf="contrasenaInput.invalid && contrasenaInput.touched" class="text-danger small mt-1">
-                La contraseña debe tener al menos 8 caracteres.
+            <!-- Alerta para correo duplicado -->
+            <div *ngIf="correoDuplicado" class="alert alert-warning mt-3">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                El correo ingresado ya está registrado. Intente con otro.
             </div>
-        </div>
-        <!-- Alerta para correo duplicado -->
-        <div *ngIf="correoDuplicado" class="alert alert-warning mt-3">
-            El correo ingresado ya está registrado. Intente con otro.
-        </div>
 
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="registroForm.invalid">
-                <i class="fas fa-user-plus me-2"></i> Registrar
-            </button>
-        </div>
-    </form>
+
+
+            <div class="d-flex justify-content-center mt-4">
+                <button type="submit" mat-raised-button color="primary"
+                    class="w-100 d-flex justify-content-center align-items-center"
+                    [disabled]="isLoading || registroForm.invalid">
+
+                    <ng-container *ngIf="!isLoading">
+                        <i class="fas fa-user-plus me-2"></i> Registrar
+                    </ng-container>
+                    <!-- Overlay tipo tutor 
+                <ng-container *ngIf="isLoading">
+                    <mat-spinner diameter="20" color="accent"></mat-spinner>
+                    <span class="ms-2">Registrando...</span>
+                </ng-container>-->
+                </button>
+            </div>
+        </form>
+    </div>
+    <!-- Overlay  -->
+    <div *ngIf="isLoading" class="spinner-overlay fade-in">
+        <div class="custom-spinner"></div>
+        <p class="loading-text">Procesando registro, por favor espere...</p>
+    </div>
 </div>

@@ -1,0 +1,344 @@
+/* ============================================
+   CONTENEDOR GENERAL
+============================================ */
+.clases-container {
+  padding: 22px;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.05));
+  backdrop-filter: blur(4px);
+  border-radius: 18px;
+}
+
+/* ============================================
+   TÍTULO PRINCIPAL
+============================================ */
+.titulo {
+  font-size: 26px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(90deg, #000708, #01020a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================
+   GRID DE CLASES
+============================================ */
+.clases-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   CARD — mezcla de “citas” + “clases PRO”
+============================================ */
+.clase-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  animation: appleStaggerFade 0.75s cubic-bezier(.22, .61, .36, 1) forwards;
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.clase-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.23);
+}
+
+/* ============================================
+   AVATAR (estilo "citas": rectangular elegante)
+============================================ */
+.left-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 14px;
+  object-fit: cover;
+
+  border: 3px solid #d0e3ff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+
+  transition: transform 0.35s ease;
+}
+
+.clase-card:hover .avatar {
+  transform: scale(1.06);
+}
+
+/* ============================================
+   SECCIÓN DERECHA — INFO
+============================================ */
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 🔵 TITULOS COMO EN “CITAS” ---------- */
+.section-title {
+  margin: 10px 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a3e5c;
+
+  border-left: 4px solid #0a3d62;
+  padding-left: 8px;
+
+  transition: 0.35s ease;
+}
+
+/* 🔵 Realce del título al hover (igual que citas) */
+.clase-card:hover .section-title {
+  color: #2d6cdf;
+}
+
+/* ============================================
+   FILAS: LABEL + VALUE
+============================================ */
+.info-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 180px) 1fr;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #102542;
+  transition: 0.25s ease;
+}
+
+.label i {
+  font-size: 18px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* 🔵 ÍCONOS SE REALZAN — estilo citas */
+.clase-card:hover .label i {
+  transform: scale(1.12);
+  color: #2d6cdf;
+}
+
+.value {
+  color: #222;
+  line-height: 1.35;
+}
+
+.tutor-nombre {
+  font-weight: 700;
+  color: #004080;
+}
+
+.materia {
+  font-weight: 600;
+  color: #2d6cdf;
+}
+
+/* ============================================
+   BOTONES
+============================================ */
+.card-buttons {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-detalles,
+.btn-agendar {
+  flex: 1;
+  padding: 11px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease;
+}
+
+.btn-detalles:hover,
+.btn-agendar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+}
+
+.btn-agendar {
+  background: linear-gradient(135deg, #2d6cdf, #6dd5ed);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ============================================
+   ANIMACIÓN CARD
+============================================ */
+@keyframes appleStaggerFade {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 550px) {
+  .clase-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px;
+  }
+
+  .avatar {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+  }
+
+  .card-buttons {
+    flex-direction: column;
+  }
+}
+
+/* ============================================
+   BLOQUE “CÓMO FUNCIONA” — HIW
+============================================ */
+.hiw-container {
+  margin-bottom: 1.8rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hiw-title {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #0A2342;
+}
+/* Contenedor horizontal (columnas) */
+.hiw-steps {
+  display: flex;
+  flex-wrap: wrap;        /* permite que bajen los cards en pantallas pequeñas */
+  justify-content: center; /* centra los cards si sobra espacio */
+  gap: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;        /* evita que se toque el borde de la pantalla */
+}
+
+/* Card individual */
+.hiw-step {
+  flex: 1 1 260px; /* crece y se encoge, mínimo 260px */
+  max-width: 380px;
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  opacity: 0;
+  transition:
+    transform 0.45s cubic-bezier(.22, .61, .36, 1),
+    box-shadow 0.45s cubic-bezier(.22, .61, .36, 1),
+    background 0.45s ease;
+}
+
+/* Animaciones cascada */
+.hiw-step:nth-child(1) { animation: fadeUp 0.7s ease forwards 0.2s; }
+.hiw-step:nth-child(2) { animation: fadeUp 0.7s ease forwards 0.35s; }
+.hiw-step:nth-child(3) { animation: fadeUp 0.7s ease forwards 0.5s; }
+/* Icono circular */
+.icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(10, 35, 66, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #0A2342;
+  margin-bottom: 6px;
+  transition: transform 0.35s ease;
+}
+
+/* Títulos y texto */
+.hiw-step h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0A2342;
+}
+
+.hiw-step p {
+  margin: 0;
+  color: #333;
+  opacity: 0.85;
+}
+
+/* Hover elegante */
+.hiw-step:hover {
+  transform: translateY(-12px) scale(1.035);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.hiw-step:hover .icon-circle {
+  transform: scale(1.12);
+}
+
+/* Animación cascada */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

@@ -1,78 +1,112 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, FormBuilder } from '@angular/forms';
-
+import { Participante } from '../models/participante.model';
 import { RegistroParticipanteService } from './registro-participante.service';
+import * as bcrypt from 'bcryptjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+
+
 
 @Component({
   selector: 'app-registro-participante',
-  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule],
+  standalone: true,
+  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule],
   templateUrl: './registro-participante.component.html',
   styleUrls: ['./registro-participante.component.css']
 })
 export class RegistroParticipanteComponent {
-  correo: string = '';
+  correoPersonal: string = '';
   nombres: string = '';
   apellidos: string = '';
   contrasena: string = '';
-  formSubmitted: boolean = false;
   showPassword = false;
-  correoDuplicado: boolean = false;
+  correoDuplicado = false;
+  formSubmitted = false;
+  isLoading = false;
 
   constructor(
     private registroService: RegistroParticipanteService,
-    private fb: FormBuilder) { }
+    private cd: ChangeDetectorRef
+  ) { }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
-  // Método que se ejecuta al intentar registrar
-  onRegister(registroForm: any) {
+
+  onRegister(form: any): void {
     this.formSubmitted = true;
-    this.correoDuplicado = false; // Reiniciamos el estado del error
+    this.correoDuplicado = false;
 
 
-    if (registroForm.valid, this.correo && this.nombres && this.apellidos && this.contrasena) {
-      const nuevoParticipante = {
-        correo: this.correo,
-        nombre: this.nombres,
-        apellido: this.apellidos,
-        password: this.contrasena,
-        rol: 'Participante', // Por defecto, asignamos el rol 'Participante'
-      };
+    if (form.valid) {
+      this.isLoading = true;
+      this.cd.detectChanges();
+      
 
-      this.registroService.registrarParticipante(nuevoParticipante).subscribe({
-        next: (response) => {
-          console.log('Registro exitoso:', response);
-          alert('Registro completado');
-          // Limpiar el formulario después del registro
-          this.resetForm(registroForm);
-        },
-        error: (error) => {
-          console.error('Error en el registro:', error);
+      // Primero verificamos si existe el correo
+      this.registroService.obtenerParticipantes().subscribe({
 
-          const mensajeError = error.error.message || 'Ocurrió un error inesperado.';
-          alert(mensajeError); // Muestra el mensaje enviado por el backend
+        next: (participantes) => {
+          const existe = participantes.some(
+            (p) => p.correoPersonal === this.correoPersonal);
 
-          if (error.error.message === 'Correo repetido.') {
+          if (existe) {
+            this.isLoading = false;
             this.correoDuplicado = true;
-          } 
+            alert('⚠️ El correo ya está registrado, intente uno nuevo.');
+            return;
+          }
+          // 🔐 Generar el hash de la contraseña antes de enviar
+          const salt = bcrypt.genSaltSync(10); // Genera la “sal” (aleatoriedad)
+          const hashedPassword = bcrypt.hashSync(this.contrasena, salt);
+
+          const nuevoParticipante: Participante = {
+            nombres: this.nombres,
+            apellidos: this.apellidos,
+            correoPersonal: this.correoPersonal,
+            contrasena: hashedPassword,
+          };
+
+          // Registramos al participante
+          this.registroService.registrarParticipante(nuevoParticipante).subscribe({
+            next: (response) => {
+              this.isLoading = false;
+              console.log('Participante registrado:', response);
+              alert('Registro completado con éxito.');
+              this.resetForm(form);
+            },
+            error: (error) => {
+              console.error('Error en el registro:', error);
+              this.isLoading = false;
+              alert('Ocurrió un error al registrar el participante.');
+            }
+          });
         },
+
+        error: (error) => {
+          console.error('Error al verificar participantes:', error);
+          this.isLoading = false;
+          alert('❌ Error al verificar correos existentes.');
+        }
+
       });
     }
   }
-  resetForm(registroForm: any) {
-    this.correo = '';
+
+  resetForm(form: any): void {
+    this.correoPersonal = '';
     this.nombres = '';
     this.apellidos = '';
     this.contrasena = '';
     this.formSubmitted = false;
-
-    registroForm.resetForm();
+    form.resetForm();
   }
 }
+
 
 

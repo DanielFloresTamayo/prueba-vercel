@@ -1,0 +1,206 @@
+/* ===============================
+   CONTENEDOR GENERAL
+================================= */
+.citas-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #003366;
+}
+
+/* ===============================
+   GRID
+================================= */
+.clases-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* ===============================
+   CARD GENERAL
+================================= */
+.clase-card {
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+
+  opacity: 0;
+  animation: smoothFadeIn 0.8s ease forwards;
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.clase-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.23);
+}
+
+/* ANIMACIÓN — estable, sin desaparecer */
+@keyframes smoothFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    filter: blur(6px);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===============================
+   FOTO / LEFT SECTION (estilo citas)
+================================= */
+.left-section {
+  width: 180px;
+  background: #f0f6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px; /* Rectangular elegante como en citas */
+  object-fit: cover;
+  border: 3px solid #d0e3ff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+
+  transition: transform 0.35s ease;
+}
+
+.clase-card:hover .avatar {
+  transform: scale(1.06);
+}
+
+/* ===============================
+   RIGHT SECTION — mezcla PRO
+================================= */
+.right-section {
+  flex: 1;
+  padding: 20px;
+}
+
+.section-title {
+  margin: 10px 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a3e5c;
+
+  border-left: 4px solid #0a3d62;
+  padding-left: 8px;
+
+  transition: 0.35s ease;
+}
+
+.clase-card:hover .section-title {
+  color: #2d6cdf;
+}
+
+/* ===============================
+   FILAS DE INFO
+================================= */
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label {
+  width: 150px;
+  font-weight: 600;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #102542;
+
+  transition: 0.25s ease;
+}
+
+.label i {
+  font-size: 18px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.clase-card:hover .label i {
+  transform: scale(1.12);
+  color: #2d6cdf;
+}
+
+.value {
+  flex: 1;
+  font-size: 15px;
+  color: #222;
+}
+
+/* Nombre del tutor */
+.tutor-nombre {
+  font-weight: 700;
+  color: #004080;
+}
+
+/* ESTADO */
+.estado {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.estado.aprobado { background: #d9f5dd; color: #2e7d32; }
+.estado.pendiente { background: #fff2cc; color: #b26a00; }
+.estado.rechazado { background: #ffd6d6; color: #c62828; }
+
+/* ===============================
+   RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+  .clase-card {
+    flex-direction: column;
+  }
+
+  .left-section {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .avatar {
+    width: 140px;
+    height: 140px;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}

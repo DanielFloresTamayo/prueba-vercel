@@ -1,0 +1,52 @@
+<div class="tdash-wrapper">
+  <div class="tdash-container container-xl px-3 py-4">
+
+    <!-- BOTÓN HAMBURGUESA (MÓVIL) -->
+    <button class="menu-toggle d-md-none" (click)="toggleSidebar()">
+      <i class="fas" [ngClass]="{ 'fa-bars': !isSidebarOpen, 'fa-times': isSidebarOpen }"></i>
+    </button>
+
+    <!-- Overlay opcional -->
+    <div class="sidebar-overlay" [class.active]="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+    <div class="dashboard-layout">
+
+      <!-- SIDEBAR FIJO -->
+      <aside class="tdash-sidebar" [ngClass]="{ open: isSidebarOpen }">
+        <div class="brand">
+          <div class="logo-circle"></div>
+          <h5 class="m-0 fw-bold">Bienvenido {{ user?.nombres }} {{ user?.apellidos }}</h5>
+          <small>{{ user?.email }}</small>
+        </div>
+
+        <nav class="menu">
+          <a routerLink="clases" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-chalkboard-teacher me-2"></i>Clases
+          </a>
+
+          <a routerLink="citas" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-calendar-alt me-2"></i>Mis citas
+          </a>
+
+          <a routerLink="resenas" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-comment-dots me-2"></i>Reseñas
+          </a>
+
+
+          <a routerLink="cambiar-contrasena" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-key me-2"></i>Contraseña
+          </a>
+        </nav>
+
+        <button class="btn-logout w-100 mt-3" (click)="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión
+        </button>
+      </aside>
+
+      <!-- CONTENIDO MAIN -->
+      <main class="tdash-main">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="clases-switch">
+
+  <div class="form-card" [ngClass]="{'editando': modoEdicion}">
+
+    <!--  <div *ngIf="modoEdicion" class="badge-edicion">
+      <i class="fa-solid fa-wrench"></i> MODO EDICIÓN
+    </div>-->
+
+    <div *ngIf="vistaActual === 'crear'" class="clases-card">
+      <h2 class="titulo-form" [ngClass]="{'modo-edicion': modoEdicion}">
+        <i class="fa-solid" [ngClass]="modoEdicion ? 'fa-pen-to-square' : 'fa-plus-circle'"></i>
+        {{ modoEdicion ? 'Editar clase' : 'Publicar nueva clase' }}
+      </h2>
+
+
+      <form #form="ngForm" #claseForm="ngForm" (ngSubmit)="registrarClase(claseForm)" novalidate>
+        <div class="form-row">
+          <!-- Título -->
+          <div class="form-group">
+            <label for="titulo"><i class="bi bi-type"></i> Título de la clase</label>
+            <input type="text" id="titulo" name="titulo" [(ngModel)]="clase.titulo" required minlength="2"
+              maxlength="100" placeholder="Ejemplo: MRUV para principiantes" #titulo="ngModel" />
+            <div class="error" *ngIf="titulo.invalid && titulo.touched">
+              <small *ngIf="titulo.errors?.['required']">El título es obligatorio.</small>
+              <small *ngIf="titulo.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+              <small *ngIf="titulo.errors?.['maxlength']">No puede superar los 100 caracteres.</small>
+            </div>
+          </div>
+
+          <!-- Materia -->
+          <div class="form-group">
+            <label for="materia"><i class="bi bi-book"></i> Asignatura</label>
+            <select id="materia" name="materia" [(ngModel)]="clase.materia" required #materia="ngModel">
+              <option value="" disabled selected>Seleccione una materia</option>
+              <option *ngFor="let m of materias" [value]="m">{{ m }}</option>
+            </select>
+            <div class="error" *ngIf="materia.invalid && materia.touched">
+              <small>Debe seleccionar una asignatura.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group">
+          <label for="descripcion"><i class="bi bi-card-text"></i> Descripción</label>
+          <textarea id="descripcion" name="descripcion" [(ngModel)]="clase.descripcion" required minlength="2"
+            maxlength="250" placeholder="Describe brevemente tu clase" #descripcion="ngModel"></textarea>
+          <div class="error" *ngIf="descripcion.invalid && descripcion.touched">
+            <small *ngIf="descripcion.errors?.['required']">La descripción es obligatoria.</small>
+            <small *ngIf="descripcion.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+            <small *ngIf="descripcion.errors?.['maxlength']">No puede superar los 250 caracteres.</small>
+          </div>
+        </div>
+
+        <!-- Botón -->
+        <button type="submit" [disabled]="claseForm.invalid">
+          <i class="bi" [ngClass]="modoEdicion ? 'bi-save' : 'bi-upload'"></i>
+          {{ modoEdicion ? 'Actualizar clase' : 'Publicar clase' }}
+        </button>
+
+        <button *ngIf="modoEdicion" type="button" class="btn btn-outline-danger mt-3" class="btn-cancelar"
+          (click)="cancelarEdicion(form)">
+          <i class="fa-solid fa-xmark"></i> Cancelar
+        </button>
+
+
+      </form>
+    </div>
+
+    <div *ngIf="vistaActual === 'editar'" class="clases-card">
+      <h2><i class="bi bi-pencil-square"></i> Gestionar tus clases</h2>
+
+      <!-- Contenedor de cards -->
+      <div class="clases-grid">
+        <!-- Card de una clase (esto luego será *ngFor) -->
+        <div *ngFor="let c of clases" class="clase-card">
+          <div class="clase-header">
+            <div class="clase-icon">
+              <i class="bi bi-journal-bookmark-fill"></i>
+            </div>
+
+            <div class="clase-info">
+              <h3 class="clase-titulo">{{ c.titulo }}</h3>
+              <span class="clase-materia">{{ c.materia }}</span>
+            </div>
+          </div>
+
+          <p class="clase-descripcion">
+            {{ c.descripcion }}
+          </p>
+
+
+          <div class="clase-actions">
+            <button class="btn-editar" (click)="editarClase(c)">
+              <i class="bi bi-pencil-fill"></i> Editar
+            </button>
+
+            <button class="btn-eliminar" (click)="eliminarClase(c.id!)">
+              <i class="fa-solid fa-trash"></i> Eliminar
+            </button>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

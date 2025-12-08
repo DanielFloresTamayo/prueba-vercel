@@ -18,36 +18,10 @@ export class AuthService {
   private token: string | null = null;
 
   constructor(private http: HttpClient) {
-    // Intentar recuperar el token al iniciar el servicio
-    this.token = localStorage.getItem('token');
-    if (this.token) {
-      console.log('Token recuperado al iniciar el servicio:', this.token);
-      console.log('Token decodificado:', this.decodeToken());
-    }
+
   }
 
-  login(correo: string, password: string): Observable<LoginResponse> {
-    const url = `${this.apiUrl}/login`;
-    const body = { correo, password };
-
-    console.log('Intentando login con:', { correo });
-
-    return this.http.post<LoginResponse>(url, body).pipe(
-      tap(response => {
-        if (response.token) {
-          // Guardar token en el servicio y localStorage
-          //this.token = response.token;
-          this.setToken(response.token);
-          console.log('Token guardado exitosamente');
-          // Decodificar el token para extraer información y mostrarlo en consola
-          const decoded = this.decodeToken();
-          console.log('Token decodificado:', decoded);
-        }
-      }),
-      catchError(this.handleError)
-    );
-  }
-
+ 
   logout(): void {
     // Limpiar token y localStorage
     localStorage.removeItem('token');
@@ -55,28 +29,7 @@ export class AuthService {
     console.log('Sesión cerrada exitosamente');
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  // Headers para peticiones autenticadas
-  getAuthHeaders(): HttpHeaders {
-    const token = this.getToken();
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-  }
-
-  /** 🔹 Encapsula la lógica de guardar el token */
-  private setToken(token: string): void {
-    localStorage.setItem('token', token);
-    this.token = token;
-  }
 
   /*
  Lee y decodifica el token almacenado.
@@ -84,25 +37,10 @@ export class AuthService {
  que luego se puede utilizar para redirigir al usuario o controlar accesos.
  Decodifica el token almacenado y devuelve su contenido.
 */
-  decodeToken(): any {
-    const token = this.getToken();
-    if (token) {
-      const decoded = jwt_decode(token);
-      //const decoded = (jwt_decode as any).default(token);
-      //console.log('Token decodificado:', decoded);
-      return decoded;
-    } else {
-      console.warn('No se encontró token para decodificar.');
-      return null;
-    }
-  }
 
   /**
  * Método de conveniencia para obtener el objeto decodificado.
  */
-  getDecodedToken(): any {
-    return this.decodeToken();
-  }
 
   private handleError(error: HttpErrorResponse) {
     console.error('Error en la petición:', error);

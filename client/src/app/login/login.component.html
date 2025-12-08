@@ -1,17 +1,21 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="col-md-6 col-lg-4">
-    <div class="card shadow-lg p-4">
+<div class="login-wrapper d-flex justify-content-center align-items-center vh-100">
+  <div class="col-md-6 col-lg-4 fade-wrapper">
+    <div class="card shadow-lg p-4 login-card fade-in-up">
       <h2 class="text-center mb-4">Iniciar Sesión</h2>
-     
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
 
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
         <!-- Correo -->
         <div class="mb-3">
           <label for="correo" class="form-label">Correo Electrónico</label>
-          <input type="email" id="correo" formControlName="correo" class="form-control"
-            [ngClass]="{'is-invalid': loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched}"
-            placeholder="Ingrese su correo" required />
-          <div *ngIf="loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched" class="invalid-feedback">
+          <input type="email" id="correo" formControlName="correo" class="form-control" [ngClass]="{
+              'is-invalid':
+                loginForm.get('correo')?.invalid &&
+                loginForm.get('correo')?.touched
+            }" placeholder="Ingrese su correo" required />
+          <div *ngIf="
+              loginForm.get('correo')?.invalid &&
+              loginForm.get('correo')?.touched
+            " class="invalid-feedback">
             Ingrese un correo válido.
           </div>
         </div>
@@ -21,31 +25,63 @@
           <label for="password" class="form-label">Contraseña</label>
           <div class="input-group">
             <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" formControlName="password"
-              class="form-control"
-              [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
-              placeholder="Ingrese su contraseña" required />
-            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+              class="form-control" [ngClass]="{
+                'is-invalid':
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+              }" placeholder="Ingrese su contraseña" required />
+            <button type="button" class="btn btn-outline-secondary toggle-btn" (click)="togglePasswordVisibility()">
               <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
             </button>
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-              class="invalid-feedback">
+            <div *ngIf="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              " class="invalid-feedback">
               La contraseña debe tener entre 8 y 12 caracteres con al menos un número y un símbolo.
             </div>
           </div>
         </div>
 
         <!-- Mensaje de error -->
-        <div *ngIf="errorMessage" class="alert alert-danger text-center">
+        <div *ngIf="errorMessage" class="alert alert-danger text-center fade-in">
           {{ errorMessage }}
         </div>
 
         <!-- Botones -->
-        <div  class="d-grid gap-2">
-          <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-          <button type="button" class="btn btn-secondary" (click)="goToRegister()">Registrarse</button>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary">
+            Iniciar Sesión
+          </button>
+          <span>¿No tienes una cuenta?</span>
+          <button type="button" class="btn btn-secondary " (click)="goToRegister()">
+            🧑‍🏫 Registrarse como Tutor
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="goToRegister1()">
+            👨‍🎓 Registrarse como Participante
+          </button>
+
         </div>
 
+        <!--     <div class="d-flex justify-content-center mt-4">
+          <button type="button" class="btn btn-primary me-2" (click)="goToRegister()">
+            🧑‍🏫 Registrarme como Tutor
+          </button>
+          <button type="button" class="btn btn-success" (click)="goToRegister1()">
+            Registrarme como Participante
+          </button>
+        </div>-->
       </form>
     </div>
   </div>
+
+  <!-- Spinner global mientras se valida el login
+<div class="spinner-container" *ngIf="cargando">
+  <div class="spinner"></div>
+</div> -->
+
+  <!-- Overlay con spinner 
+  <div *ngIf="cargando" class="spinner-overlay">
+    <div class="spinner"></div>
+    <p class="loading-text">Verificando credenciales...</p>
+  </div>-->
 </div>

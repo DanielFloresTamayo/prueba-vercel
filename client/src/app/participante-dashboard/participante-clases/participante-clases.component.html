@@ -1,0 +1,112 @@
+<div class="clases-container">
+
+  <div class="hiw-container fade-cascade">
+
+    <h2 class="hiw-title">¿Cómo funciona?</h2>
+
+    <div class="hiw-steps">
+
+      <div class="hiw-step">
+        <div class="icon-circle"><i class="bi bi-search"></i></div>
+        <h3>1. Buscar</h3>
+        <p>Explora un amplio catálogo con anuncios de distintas áreas académicas.</p>
+      </div>
+
+      <div class="hiw-step">
+        <div class="icon-circle"><i class="bi bi-people"></i></div>
+        <h3>2. Contactar</h3>
+        <p>Selecciona al profesor perfecto según tus necesidades y preferencias.</p>
+      </div>
+
+      <div class="hiw-step">
+        <div class="icon-circle"><i class="bi bi-check2-circle"></i></div>
+        <h3>3. Adelante</h3>
+        <p>Empieza tus clases particulares tras ponerte en contacto con el tutor.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <h2 class="titulo">📚 Encuentra a tu profesor ideal</h2>
+
+  <div class="clases-grid">
+
+    <div class="clase-card card-anim" *ngFor="let clase of clases">
+
+      <!-- Avatar -->
+      <div class="left-section">
+        <img class="avatar" [src]="clase.tutor?.foto || '/assets/imagenes/default-profile.png'" alt="Tutor">
+      </div>
+
+      <div class="right-section">
+
+        <!-- Información del tutor -->
+        <h4 class="section-title">Información del tutor</h4>
+
+        <div class="tutor-section">
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-person-vcard"></i><span>Tutor:</span></div>
+            <div class="value tutor-nombre">{{ clase.tutor?.nombres }} {{ clase.tutor?.apellidos }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-telephone"></i><span>Número de contacto:</span></div>
+            <div class="value">{{ clase.tutor?.numeroContacto }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-envelope"></i><span>Correo personal:</span></div>
+            <div class="value">{{ clase.tutor?.correoInstitucional }}</div>
+          </div>
+
+        </div>
+
+        <!-- Información de la clase -->
+        <h4 class="section-title">Información de la clase</h4>
+
+        <div class="class-section">
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-book"></i><span>Asignatura:</span></div>
+            <div class="value materia">{{ clase.materia }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-journal-text"></i><span>Título:</span></div>
+            <div class="value titulo-clase">{{ clase.titulo }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-chat-left-dots"></i><span>Descripción:</span></div>
+            <div class="value descripcion">{{ clase.descripcion }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-calendar-event"></i><span>Publicado:</span></div>
+            <div class="value">{{ getFechaRelativa(clase.fechaPublicacion) }}</div>
+          </div>
+
+        </div>
+
+        <!-- Botones -->
+        <div class="card-buttons">
+          <button class="btn-detalles" >Ver detalles</button>
+
+          <!-- 👇 Botón con ripple + SweetAlert + agendar(clase) -->
+          <button 
+            class="btn-agendar"
+            (click)="agendar(clase)"
+            (mousedown)="ripple($event)">
+            Solicitar cita
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

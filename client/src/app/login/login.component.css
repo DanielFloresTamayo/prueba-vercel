@@ -1,36 +1,43 @@
-.container {
-  margin-top: 3rem;
-}
-
-.card {
+/* Tarjeta de login */
+.login-card {
   border-radius: 1rem;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.477);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.login-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Título */
 h2 {
   font-weight: bold;
+  color: #333;
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
+/* Input animado */
+input.form-control {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.form-group label {
-  font-weight: bold;
+input.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.2);
 }
 
-.form-group button {
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
+/* Botones */
 .btn {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn-primary {
@@ -38,15 +45,98 @@ h2 {
   border: none;
 }
 
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
 .btn-secondary {
   background-color: #6c757d;
   border: none;
 }
 
-.text-danger {
-  font-size: 0.85rem;
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: scale(1.03);
 }
 
-.fa-eye, .fa-eye-slash {
-  font-size: 1.2rem;
+/* Botón del ojo */
+.toggle-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Alertas */
+.alert {
+  border-radius: 10px;
+  animation: fadeIn 0.4s ease;
+}
+
+.loading-text {
+  color: white;
+  margin-top: 15px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(3px);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: translateY(10px) scale(0.99);
+    filter: blur(1.5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Contenedor para aplicar transición fluida */
+.fade-wrapper {
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  animation: fadeBackground 1.2s ease both;
+}
+
+@keyframes fadeBackground {
+  from {
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  to {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
+.login-wrapper {
+  background: linear-gradient(135deg, #ffb300, #63ff9a);
+  backdrop-filter: blur(8px);
+ /* animation: gradientFade 1s ease forwards;*/
+}
+
+@keyframes gradientFade {
+  from {
+    opacity: 0;
+    filter: brightness(0.8);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
 }

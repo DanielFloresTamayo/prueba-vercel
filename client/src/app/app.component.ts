@@ -41,11 +41,11 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    imports: [HttpClientModule, ReactiveFormsModule, RouterOutlet, RouterLink] // Importa HttpClientModule en el componente raíz
+    imports: [HttpClientModule, ReactiveFormsModule, RouterOutlet] // Importa HttpClientModule en el componente raíz
     //providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }]
 })
 export class AppComponent {
-  title = 'mi-app-angular';
+  title = 'PROYECTO FINAL';
 
   constructor() {}
 }

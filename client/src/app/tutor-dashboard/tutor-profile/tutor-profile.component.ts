@@ -1,19 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { TutorDashboardService } from '../services/tutor-dashboard.service';
 import Swal from 'sweetalert2';
-import { TutorProfileService } from '../services/tutor-profile.service';
-
-// Definición de la interfaz sin índice
-export interface TutorProfile {
-  nombre: string;
-  apellido: string;
-  email: string;
-  fecha_nacimiento: string;
-  numero_contacto: string;
-  carrera: string;
-  foto: string;
-}
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tutor-profile',
@@ -23,119 +14,129 @@ export interface TutorProfile {
   styleUrls: ['./tutor-profile.component.css'],
 })
 export class TutorProfileComponent implements OnInit {
-  tutor: TutorProfile = {
-    nombre: '',
-    apellido: '',
-    email: '',
-    fecha_nacimiento: '',
-    numero_contacto: '',
-    carrera: '',
-    foto: '/assets/default-profile.png',
-  };
+  tutor: any = null;
+  loading = true;
+  mostrarFormulario = false;
+  modoCompletar = false;
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
 
-  private tutorService = inject(TutorProfileService);
-
-  constructor() {
-    console.log('TutorProfileComponent inicializado.');
-  }
+  constructor(
+    private tutorService: TutorDashboardService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadTutorData();
   }
 
   loadTutorData(): void {
-    this.tutorService.getTutorProfile().subscribe({
-      next: (response) => {
-        console.log('📥 Datos recibidos del perfil:', response);
-        if (response.success && response.data) {
-          // Mapear la respuesta del backend a la interfaz TutorProfile
-          this.tutor = {
-            nombre: response.data.nombre || '',
-            apellido: response.data.apellido || '',
-            email: response.data.correo || '',
-            fecha_nacimiento: response.data.fecha_nacimiento || '',
-            numero_contacto: response.data.numero_contacto || '',
-            carrera: response.data.carrera || '',
-            foto: response.data.foto && response.data.foto.trim() ? response.data.foto : '/assets/default-profile.png',
-          };
-          console.log('📝 Perfil actualizado en frontend:', this.tutor);
-        }
-      },
-      error: (err) => {
-        console.error('❌ Error al cargar el perfil del tutor:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se pudo cargar el perfil. Intenta nuevamente.',
-          confirmButtonText: 'Aceptar'
-        });
-      }
-    });
-  }
+    const usuario = localStorage.getItem('usuario');
 
-  saveChanges(): void {
-    // Solo enviamos los campos a actualizar: número de contacto y carrera
-    const updateData = {
-      numero_contacto: this.tutor.numero_contacto,
-      carrera: this.tutor.carrera,
-    };
+    if (!usuario) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sesión no encontrada',
+        text: 'Por favor, inicia sesión nuevamente.',
+        confirmButtonColor: '#007bff',
+      }).then(() => this.router.navigate(['/login']));
+      return;
+    }
 
-    console.log('📤 Enviando datos actualizados:', updateData);
-    this.tutorService.updateTutorProfile(updateData).subscribe({
-      next: (response) => {
-        console.log('✅ Respuesta de actualización:', response);
-        Swal.fire({
-          icon: 'success',
-          title: '¡Actualización exitosa!',
-          text: 'Los datos se han guardado correctamente.',
-          confirmButtonText: 'Aceptar'
-        });
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error('❌ Error al actualizar el perfil:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se pudieron actualizar los datos. Intenta nuevamente.',
-          confirmButtonText: 'Aceptar'
-        });
-      }
-    });
-  }
+    const tutor = JSON.parse(usuario);
+    const start = performance.now();
 
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      console.log('📂 Archivo seleccionado:', file);
-      this.tutorService.uploadProfilePicture(file).subscribe({
-        next: (response) => {
-          console.log('🖼️ Imagen subida, respuesta:', response);
-          if (response.success && response.imageUrl) {
-            this.tutor.foto = response.imageUrl;
+    this.tutorService.getTutorById(tutor.id).subscribe({
+      next: (data) => {
+        const elapsed = performance.now() - start;
+        const delay = Math.max(0, 1200 - elapsed);
+
+        setTimeout(() => {
+          this.tutor = data;
+          this.loading = false;
+
+          // Si faltan datos clave, se abre el formulario automáticamente
+          if (!this.tutor.numeroContacto || !this.tutor.carrera) {
+            this.modoCompletar = true;
+            this.mostrarFormulario = true;
             Swal.fire({
-              icon: 'success',
-              title: 'Foto subida',
-              text: 'La imagen se ha subido y guardado correctamente.',
-              confirmButtonText: 'Aceptar'
+              icon: 'info',
+              title: 'Completa tu perfil',
+              text: 'Agrega tu número de contacto y carrera.',
+              confirmButtonColor: '#007bff',
             });
           }
-        },
-        error: (err) => {
-          console.error('❌ Error al subir la imagen:', err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo subir la imagen. Intenta nuevamente.',
-            confirmButtonText: 'Aceptar'
-          });
-        }
-      });
-    }
+        }, delay);
+      },
+      error: () => {
+        Swal.fire('Error', 'No se pudo cargar el perfil.', 'error');
+        this.loading = false;
+      },
+    });
   }
 
-  // Función para limpiar los campos de contacto en el formulario
-  resetForm(): void {
+  toggleFormulario(): void {
+    this.mostrarFormulario = !this.mostrarFormulario;
+  }
+
+  cancelarEdicion(): void {
+    this.mostrarFormulario = false;
+    this.modoCompletar = false;
+  }
+
+  /** 📸 Subir foto y mostrar vista previa */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+    this.selectedFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewUrl = reader.result;
+      this.tutor.foto = reader.result as string; // Guardar directamente en base64
+    };
+    reader.readAsDataURL(file);
+  }
+
+  guardarCambios(form: NgForm): void {
+    if (form.invalid) {
+      Swal.fire('Campos incompletos', 'Por favor llena todos los campos requeridos.', 'warning');
+      return;
+    }
+
+    const updatedTutor = {
+      numeroContacto: this.tutor.numeroContacto,
+      carrera: this.tutor.carrera,
+      foto: this.tutor.foto,
+    };
+
+    this.tutorService.updateTutorProfile(this.tutor.id, updatedTutor).subscribe({
+      next: (data: any) => {
+        Swal.fire({
+          icon: 'success',
+          title: this.modoCompletar ? 'Perfil completado 🎉' : 'Cambios guardados',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.mostrarFormulario = false;
+        this.modoCompletar = false;
+      },
+      error: (err: any) => {
+        console.error('❌ Error al actualizar tutor:', err);
+        Swal.fire('Error', 'No se pudo guardar la información.', 'error');
+      },
+    });
+  }
+
+  cerrarSesion(): void {
+    this.authService.logout();
+  }
+
+  resetForm(form: NgForm): void {
+    form.resetForm();
     this.tutor.numero_contacto = '';
     this.tutor.carrera = '';
     console.log('🧹 Formulario reiniciado.');

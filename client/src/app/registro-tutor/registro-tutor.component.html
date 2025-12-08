@@ -1,84 +1,111 @@
-<div class="registro-container">
-  <h2 class="mb-4 text-center">Registro de Tutor</h2>
+<div class="background-container">
 
-  <form (ngSubmit)="registerTutor(tutorForm)" #tutorForm="ngForm" class="p-4 border rounded bg-light">
-    <!-- Correo Institucional -->
-    <div class="form-group mb-3">
-      <label for="email">Correo Institucional</label>
-      <input type="email" id="email" name="email" class="form-control" [(ngModel)]="tutor.correo" #email="ngModel"
-        [ngClass]="{'is-invalid': email.invalid && email.touched}" required pattern="[a-zA-Z0-9._%+-]+@epn\.edu\.ec"
-        minlength="8" maxlength="30" />
-      <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
-        El correo debe ser válido y con el dominio epn.edu.ec.
-      </div>
-    </div>
+  <div class="registro-container glass-card">
+    <h2 class="mb-4 text-center">Registro de Tutor</h2>
 
-    <!-- Nombres -->
-    <div class="form-group mb-3">
-      <label for="firstName">Nombres</label>
-      <input type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="tutor.nombre"
-        #firstName="ngModel" [ngClass]="{'is-invalid': firstName.invalid && firstName.touched}" required minlength="10"
-        maxlength="30" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
-      <div *ngIf="firstName.invalid && firstName.touched" class="text-danger small mt-1">
-        Los nombres deben tener mínimo 10 caracteres, no debe contener números.
-      </div>
-    </div>
-
-    <!-- Apellidos -->
-    <div class="form-group mb-3">
-      <label for="lastName">Apellidos</label>
-      <input type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="tutor.apellido"
-        #lastName="ngModel" [ngClass]="{'is-invalid': lastName.invalid && lastName.touched}" required minlength="10"
-        maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
-      <div *ngIf="lastName.invalid && lastName.touched" class="text-danger small mt-1">
-        Los apellidos deben tener mínimo 10 caracteres, no debe contener números.
-      </div>
-    </div>
-
-    <!-- Nivel Académico -->
-    <div class="form-group mb-3">
-      <label for="academicLevel">Nivel Académico</label>
-      <input type="text" id="academicLevel" name="academicLevel" class="form-control"
-        [(ngModel)]="tutor.nivel_academico" #academicLevel="ngModel"
-        [ngClass]="{'is-invalid': academicLevel.invalid && academicLevel.touched}" required minlength="10"
-        maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
-      <div *ngIf="academicLevel.invalid && academicLevel.touched" class="text-danger small mt-1">
-        El nivel académico debe tener mínimo 10 caracteres.
-      </div>
-    </div>
-    <!-- Fecha de Nacimiento -->
-    <div class="form-group">
-      <label for="birthDate">Fecha de Nacimiento</label>
-      <input type="date" class="form-control" id="birthDate" required name="birthDate"
-        [(ngModel)]="tutor.fecha_nacimiento" #birthDate="ngModel"
-        [ngClass]="{'is-invalid': birthDate.invalid && birthDate.touched}" />
-    </div>
-    <div class="form-group mb-3">
-      <label for="password">Contraseña</label>
-      <div class="input-group">
-        <input [type]="showPassword ? 'text' :'password'" class="form-control" id="password" required name="password"
-          class="form-control" 
-          minlength="8" maxlength="12" placeholder="Ingresa tu contraseña"
-          
-          [(ngModel)]="tutor.password"
-          #password="ngModel" 
-          [ngClass]="{'is-invalid': password.invalid && password.touched}" />
-
-        <div class="input-group-append">
-          <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
-            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-          </button>
+    <form (ngSubmit)="registerTutor(tutorForm)" #tutorForm="ngForm" class="p-4 border rounded bg-light">
+      <!-- Correo Institucional -->
+      <div class="form-group mb-3">
+        <label for="email">Correo Institucional</label>
+        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="tutor.correo" #email="ngModel"
+          [ngClass]="{'is-invalid': email.invalid && email.touched}" required pattern="[a-zA-Z0-9._%+-]+@epn\.edu\.ec"
+          minlength="8" maxlength="30" />
+        <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
+          El correo debe ser válido y con el dominio epn.edu.ec.
         </div>
       </div>
-      <div *ngIf="password.invalid && password.touched" class="text-danger small mt-1">
-        La contraseña debe tener mínimo 8 caractéres, incluir al menos una letra mayúscula, un número y un carácter
-        especial.
+
+      <!-- Nombres -->
+      <div class="form-group mb-3">
+        <label for="firstName">Nombres</label>
+        <input type="text" id="firstName" name="firstName" class="form-control"
+          placeholder="Ingresa tus nombres completos" [(ngModel)]="tutor.nombre" #firstName="ngModel"
+          [ngClass]="{'is-invalid': firstName.invalid && firstName.touched}" required minlength="10" maxlength="30"
+          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
+        <div *ngIf="firstName.invalid && firstName.touched" class="text-danger small mt-1">
+          Los nombres deben tener al menos 10 caracteres, no debe contener números.
+        </div>
       </div>
-    </div>
-    <div class="form-group text-center">
-      <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="tutorForm.invalid">
-        <i class="fas fa-user-plus me-2"></i> Registrar
-      </button>
-    </div>
-  </form>
+
+      <!-- Apellidos -->
+      <div class="form-group mb-3">
+        <label for="lastName">Apellidos</label>
+        <input type="text" id="lastName" name="lastName" class="form-control"
+          placeholder="Ingresa tus apellidos completos" [(ngModel)]="tutor.apellido" #lastName="ngModel"
+          [ngClass]="{'is-invalid': lastName.invalid && lastName.touched}" required minlength="10" maxlength="50"
+          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
+        <div *ngIf="lastName.invalid && lastName.touched" class="text-danger small mt-1">
+          Los apellidos deben tener mínimo 10 caracteres, no debe contener números o caracteres sueltos.
+        </div>
+      </div>
+
+      <!-- Nivel Académico -->
+      <div class="form-group mb-3">
+        <label for="academicLevel">Nivel Académico</label>
+        <input type="text" id="academicLevel" name="academicLevel" class="form-control"
+          placeholder="Ingresa tu nivel académico-semestre" [(ngModel)]="tutor.nivel_academico" #academicLevel="ngModel"
+          [ngClass]="{'is-invalid': academicLevel.invalid && academicLevel.touched}" required minlength="10"
+          maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
+        <div *ngIf="academicLevel.invalid && academicLevel.touched" class="text-danger small mt-1">
+          El nivel académico debe tener mínimo 10 caracteres, no debe contener números o caracteres sueltos.
+        </div>
+      </div>
+      <!-- Fecha de Nacimiento -->
+      <div class="form-group">
+        <label for="birthDate">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="birthDate" required name="birthDate"
+          [(ngModel)]="tutor.fecha_nacimiento" #birthDate="ngModel"
+          [ngClass]="{'is-invalid': birthDate.invalid && birthDate.touched}" />
+      </div>
+      <!-- Contraseña -->
+      <div class="form-group mb-3">
+        <label for="password">Contraseña</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' :'password'" class="form-control" id="password" required name="password"
+            class="form-control" minlength="8" maxlength="12" placeholder="Ingresa tu contraseña"
+            [(ngModel)]="tutor.password" #password="ngModel"
+            [ngClass]="{'is-invalid': password.invalid && password.touched}" />
+
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+              <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="password.invalid && password.touched" class="text-danger small mt-1">
+          La contraseña debe tener mínimo 8 caractéres, incluir al menos una letra mayúscula, un número y un carácter
+          especial.
+        </div>
+      </div>
+      <!-- Alerta para correo duplicado -->
+      <div *ngIf="correoDuplicado" class="alert alert-warning mt-3">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        El correo institucional ya está registrado. Intente con otro.
+      </div>
+
+      <!-- Botón -->
+      <div class="d-flex justify-content-center mt-4">
+        <button type="submit" mat-raised-button color="primary"
+          class="w-100 d-flex justify-content-center align-items-center" [disabled]="isLoading || tutorForm.invalid">
+
+          <ng-container *ngIf="!isLoading">
+            <i class="fas fa-user-plus me-2"></i> Registrar
+          </ng-container>
+          <!-- Botón 
+        <ng-container *ngIf="isLoading">
+          <mat-spinner diameter="20" color="accent"></mat-spinner>
+          <span class="ms-2">Registrando...</span>
+        </ng-container>-->
+        </button>
+      </div>
+
+
+    </form>
+    <!-- Overlay del spinner global -->
+
+  </div>
+  <div *ngIf="isLoading" class="spinner-overlay fade-in">
+    <div class="custom-spinner"></div>
+    <p>Cargando registro, por favor espere...</p>
+  </div>
 </div>

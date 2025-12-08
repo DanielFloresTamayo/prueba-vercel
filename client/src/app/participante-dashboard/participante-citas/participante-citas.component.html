@@ -1,0 +1,87 @@
+<div class="citas-container">
+
+  <h2 class="titulo">📅 Mis solicitudes de clases</h2>
+
+  <div class="clases-grid">
+
+    <div class="clase-card card-anim" *ngFor="let cita of citas">
+
+      <!-- Avatar del tutor -->
+      <div class="left-section">
+        <img class="avatar"
+             [src]="cita.tutor?.foto || '/assets/imagenes/default-profile.png'"
+             alt="Tutor">
+      </div>
+
+      <div class="right-section">
+
+        <!-- Información del tutor -->
+        <h4 class="section-title">Información del tutor</h4>
+
+        <div class="tutor-section">
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-person-vcard"></i><span>Tutor:</span></div>
+            <div class="value tutor-nombre">
+              {{ cita.tutor?.nombres }} {{ cita.tutor?.apellidos }}
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-telephone"></i><span>Contacto:</span></div>
+            <div class="value">{{ cita.tutor?.numeroContacto }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-envelope"></i><span>Correo:</span></div>
+            <div class="value">{{ cita.tutor?.correoInstitucional }}</div>
+          </div>
+
+        </div>
+
+        <!-- Información de la clase -->
+        <h4 class="section-title">Clase solicitada</h4>
+
+        <div class="class-section">
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-book"></i><span>Asignatura:</span></div>
+            <div class="value">{{ cita.clase?.materia }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-journal-text"></i><span>Título:</span></div>
+            <div class="value">{{ cita.clase?.titulo }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-chat-left-dots"></i><span>Descripción:</span></div>
+            <div class="value">{{ cita.clase?.descripcion }}</div>
+          </div>
+
+        </div>
+
+        <!-- Información de la cita -->
+        <h4 class="section-title">Detalles de la solicitud</h4>
+
+        <div class="class-section">
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-calendar-event"></i><span>Fecha de solicitud:</span></div>
+            <div class="value">{{ cita.fechaSolicitud | date:'medium' }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="label"><i class="bi bi-flag"></i><span>Estado:</span></div>
+            <div class="value estado">{{ cita.estado }}</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

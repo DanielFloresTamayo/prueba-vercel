@@ -1,138 +1,152 @@
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
-import { HttpClient } from '@angular/common/http';
+import { LoginService } from './login.service';
+import * as bcrypt from 'bcryptjs';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginForm: FormGroup;
-  isPasswordVisible: boolean = false;
-  errorMessage: string = '';
 
+  loginForm!: FormGroup;
+  cargando = false;
+  errorMessage = '';
+  isPasswordVisible = false;
 
-
-  private http = inject(HttpClient);
-  private authService = inject(AuthService);
-  private router = inject(Router);
-
-  constructor(private fb: FormBuilder) {
-    this.loginForm = this.fb.group({  // Inicialización
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {
+    // Inicializamos el formulario
+    this.loginForm = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(12),
-        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,12}$/)
-      ]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
+  /** Alterna la visibilidad del campo contraseña */
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
+  /** Enviar formulario de login */
   login(): void {
-    if (this.loginForm.valid) {
-      this.errorMessage = ''; // Limpiar errores previos
-      const { correo, password } = this.loginForm.value;
+    if (this.loginForm.invalid) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor, completa todos los campos antes de continuar.',
+        confirmButtonColor: '#007bff'
+      });
+      return;
+    }
 
-      console.log('Formulario válido');
-      console.log('Datos enviados:', { correo, password });
+    const correo = this.loginForm.value.correo;
+    const password = this.loginForm.value.password;
+    this.cargando = true;
+    this.cd.detectChanges();
 
-      this.authService.login(correo, password).subscribe({
-        next: (response) => {
-          console.log('Login exitoso:', response);
-          //this.loginSuccess = true;
+    // 🔹 Muestra spinner con SweetAlert2
+    Swal.fire({
+      title: 'Verificando credenciales...',
+      html: 'Por favor espera unos segundos.',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
-          // Obtener el token decodificado a través del AuthService
-          const decodedToken = this.authService.getDecodedToken();
-          if (decodedToken) {
-            //const userRole = decodedToken.rol;
-            //console.log('Rol extraído del token:', userRole);
+    // 1️⃣ Buscar en tutores
+    this.loginService.getTutorByCorreo(correo).subscribe(tutores => {
+      if (tutores.length > 0) {
+        const tutor = tutores[0];
+        const match = bcrypt.compareSync(password, tutor.contrasena);
+        if (match) {
+          Swal.close();
+          console.log(`✅ Se inició sesión con el tutor: ${tutor.nombres} ${tutor.apellidos}`);
 
-            // Redirección según el rol
-            /*            switch (userRole) {
-                          case 'Tutor':
-                            this.router.navigate(['/registrar']);
-                            break;
-                          case 'Participante':
-                            this.router.navigate(['/registro-participante']);
-                            break;
-                          case 'Administrador':
-                            this.router.navigate(['/registro-tutor']);
-                            break;
-                          default:
-                            console.error('Rol no reconocido:', userRole);
-                            this.errorMessage = 'Error en el tipo de usuario';
-                        }*/
-            // Extraemos el rol y el nombre. Si el token no incluye 'nombre', se usará el correo.
+          localStorage.setItem('usuario', JSON.stringify({ id: tutor.id, tipo: 'tutor' }));
+          // alert(`¡Bienvenido, ${tutor.nombres}!`);
+          this.cargando = false;
 
-            const userRole = decodedToken.rol;
-            const userName = decodedToken.nombre || correo;
-            console.log('Rol extraído del token:', userRole);
-            // Mostrar popup con SweetAlert2
+          Swal.fire({
+            icon: 'success',
+            title: `¡Bienvenido, ${tutor.nombres}!`,
+            text: 'Inicio de sesión exitoso.',
+            showConfirmButton: false,
+            timer: 2000,
+            background: '#f0fff4'
+          });
+          this.router.navigate(['tutor/perfil']);
+
+          return;
+        }
+      }
+
+
+      // 2️⃣ Buscar en participantes
+      this.loginService.getParticipanteByCorreo(correo).subscribe(participantes => {
+        if (participantes.length > 0) {
+          const participante = participantes[0];
+          const match = bcrypt.compareSync(password, participante.contrasena);
+          if (match) {
+            Swal.close();
+             console.log(`✅ Se inició sesión con el participante: ${participante.nombres} ${participante.apellidos}`);
+
+            localStorage.setItem('usuario', JSON.stringify({ id: participante.id, tipo: 'participante' }));
+            localStorage.setItem('userId', String(participante.id));
+
+            this.cargando = false;
+            // alert(`¡Bienvenido, ${participante.nombres}!`);
+
             Swal.fire({
               icon: 'success',
-              title: `Bienvenido ${userName}`,
-              text: 'Es grato tenerte de nuevo',
-              confirmButtonText: 'Aceptar',
-              allowOutsideClick: false
-            }).then((result) => {
-              if (result.isConfirmed) {
-                // Redirigir según el rol
-                switch (userRole) {
-                  case 'Tutor':
-                    this.router.navigate(['/tutor/perfil']);
-                    break;
-                  case 'Participante':
-                    this.router.navigate(['/registro-participante']);
-                    break;
-                  case 'Administrador':
-                    this.router.navigate(['/gestion-usuario']);
-                    break;
-                  default:
-                    console.error('Rol no reconocido:', userRole);
-                    this.errorMessage = 'Error en el tipo de usuario';
-                }
-              }
+              title: `¡Bienvenido, ${participante.nombres}!`,
+              text: 'Inicio de sesión exitoso.',
+              showConfirmButton: false,
+              timer: 2000,
+              background: '#f0fff4'
             });
-          } else {
-            console.error('No se pudo decodificar el token para extraer el rol.');
-            this.errorMessage = 'Error al procesar la información del usuario.';
+
+            this.router.navigate(['/participante']);
+            return;
           }
-
-        },
-        error: (err) => {
-          console.error('Error en login:', err);
-          this.errorMessage = err?.error?.mensaje || 'Las credenciales no son las correctas. Por favor, intente nuevamente.';
         }
+
+        // ❌ Si llega aquí, no coincidió nada
+        this.cargando = false;
+        this.errorMessage = 'Correo o contraseña incorrectos';
+        //alert(`Correo incorrecto o contraseña incorrecta. Intente de nuevo.`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de inicio de sesión',
+          text: 'Correo o contraseña incorrectos. Intenta nuevamente.',
+          confirmButtonColor: '#d33'
+        });
+
       });
-    } else {
-      this.markFormGroupTouched(this.loginForm);
-      this.errorMessage = 'Por favor, complete todos los campos correctamente.';
-    }
-  }
-
-  // Método para marcar todos los campos como tocados
-  private markFormGroupTouched(formGroup: FormGroup): void {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      }
     });
+
   }
 
-  goToRegister(): void {
+  /** Ir a registro */
+  goToRegister() {
+    this.router.navigate(['/registro-tutor']);
+    
+  }
+    goToRegister1() {
     this.router.navigate(['/registro-participante']);
+
   }
 }

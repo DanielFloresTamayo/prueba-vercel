@@ -1,57 +1,129 @@
-<div class="container mt-4">
-  <div class="card shadow-lg">
-    <div class="card-body p-0">
-      <div class="row g-0">
-        <!-- Sidebar con imagen y nombre -->
-        <div class="col-md-4 bg-primary text-white text-center p-4 d-flex flex-column align-items-center justify-content-center">
-          <img [src]="tutor.foto || '/assets/default-profile.png'" 
-               alt="Tutor Profile" 
-               class="img-fluid rounded-circle border border-white mb-3" 
-               width="150" height="150">
-          <h4>Bienvenido, {{ tutor.nombre }} {{ tutor.apellido }}</h4>
+<div class="profile-container glass-card fade-in">
+  <div class="row g-0">
+    <!-- Lado azul (foto y nombre) -->
+    <div
+      class=" col-md-4 bg-primary text-white text-center d-flex flex-column align-items-center justify-content-center p-4 position-relative">
+      <ng-container *ngIf="!loading; else skeletonLeft">
+
+        <img [src]="tutor.foto || '/assets/default-profile.png'" class="profile-photo mb-3 border-white" />
+        <h4 class="fw-bold mb-1">Bienvenido,</h4>
+        <h4 class="fw-semibold">{{ tutor.nombres }} {{ tutor.apellidos }}</h4>
+
+        <p class="small mb-0 opacity-75"><i class="fas fa-user-tie me-1"></i>Tutor registrado</p>
+      </ng-container>
+
+      <ng-template #skeletonLeft>
+        <div class="skeleton-circle mb-3"></div>
+        <div class="skeleton-text w-75"></div>
+      </ng-template>
+    </div>
+
+    <!-- Main content (lado blanco-información) -->
+
+    <div class="col-md-8 glass-side p-4">
+      <ng-container *ngIf="!loading; else skeletonRight">
+        <h3 class="mb-4 text-primary fw-bold">
+          <i class="fas fa-info-circle me-2"></i>Información Personal
+        </h3>
+
+
+        <div class="info-group">
+          <label><i class="fas fa-envelope me-2"></i>Correo Institucional:</label>
+          <p>{{ tutor?.correoInstitucional }}</p>
         </div>
-        <!-- Contenido principal: información y formulario -->
-        <div class="col-md-8 p-4">
-          <h2 class="mb-3"><i class="fas fa-info-circle me-2"></i>Información Personal</h2>
-          <p><i class="fas fa-envelope me-2"></i><strong>Correo Institucional:</strong> {{ tutor.email }}</p>
-          <p><i class="fas fa-calendar-alt me-2"></i><strong>Fecha de Nacimiento:</strong> {{ tutor.fecha_nacimiento | date:'longDate' }}</p>
-          
-          <hr class="my-4">
-          
-          <h2 class="mb-3"><i class="fas fa-edit me-2"></i>Actualizar Información</h2>
-          <form (ngSubmit)="saveChanges()" #contactForm="ngForm">
-            <div class="mb-3">
-              <label class="form-label"><i class="fas fa-phone me-2"></i>Número de Contacto:</label>
-              <input type="tel"
-                     class="form-control"
-                     [(ngModel)]="tutor.numero_contacto"
-                     name="numero_contacto"
-                     pattern="[0-9]{10}"
-                     required>
-              <div *ngIf="contactForm.submitted && contactForm.controls.numero_contacto?.invalid" class="text-danger">
-                El número de contacto debe contener exactamente 10 dígitos numéricos.
-              </div>
+
+        <div class="info-group">
+          <label><i class="fas fa-calendar-alt me-2"></i>Fecha de Nacimiento:</label>
+          <p>{{ tutor?.fechaNacimiento | date: 'longDate' }}</p>
+        </div>
+
+        <div class="info-group">
+          <label><i class="fas fa-graduation-cap me-2"></i>Nivel Académico:</label>
+          <p>{{ tutor?.nivelAcademico }}</p>
+        </div>
+
+        <div class="info-group">
+          <label><i class="fas fa-phone me-2"></i>Número de Contacto:</label>
+          <p>{{ tutor?.numeroContacto || 'No registrado' }}</p>
+        </div>
+
+        <div class="info-group">
+          <label><i class="fas fa-university me-2"></i>Carrera:</label>
+          <p>{{ tutor?.carrera || 'No registrada' }}</p>
+        </div>
+
+        <hr class="my-4" />
+        <div class="text-center mt-4" *ngIf="!modoCompletar">
+          <button class="btn btn-primary rounded-pill px-4" (click)="toggleFormulario()">
+            <i class="fas fa-edit me-2"></i> Editar Información
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- ✏️ Formulario de edición -->
+
+      <div class="edit-form mt-4 collapse-form" [class.show]="mostrarFormulario">
+        <h4 class="text-success fw-bold mb-3">
+          <i class="bi bi-pencil-square me-2"></i>
+          {{ modoCompletar ? 'Completa tu perfil' : 'Editar Información' }}
+        </h4>
+
+        <form *ngIf="tutor" #contactForm="ngForm" (ngSubmit)="guardarCambios(contactForm)">
+          <!-- Número de contacto -->
+          <div class="mb-3">
+            <label class="form-label"><i class="fas fa-phone me-2"></i>Número de Contacto:</label>
+            <input type="tel" class="form-control" [(ngModel)]="tutor.numeroContacto" name="numeroContacto"
+              pattern="[0-9]{10}" required #numeroContacto="ngModel" />
+            <div *ngIf="contactForm.submitted && numeroContacto.invalid" class="text-danger small">
+              El número de contacto debe contener exactamente 10 dígitos, no letras.
             </div>
-            <div class="mb-3">
-              <label class="form-label"><i class="fas fa-graduation-cap me-2"></i>Carrera:</label>
-              <input type="text"
-                     class="form-control"
-                     [(ngModel)]="tutor.carrera"
-                     name="carrera"
-                     required>
-              <div *ngIf="contactForm.submitted && contactForm.controls.carrera?.invalid" class="text-danger">
-                El campo carrera es obligatorio.
-              </div>
+          </div>
+
+          <!-- Carrera -->
+          <div class="mb-3">
+            <label class="form-label"><i class="fas fa-graduation-cap me-2"></i>Carrera:</label>
+            <input type="text" class="form-control" [(ngModel)]="tutor.carrera" name="carrera" required
+              #carrera="ngModel" />
+            <div *ngIf="contactForm.submitted && carrera.invalid" class="text-danger small">
+              El campo carrera es obligatorio.
             </div>
-            <div class="mb-3">
-              <label class="form-label"><i class="fas fa-image me-2"></i>Subir Foto de Perfil:</label>
-              <input type="file" class="form-control" (change)="onFileSelected($event)">
+          </div>
+
+          <!-- 📸 Subir Foto de Perfil con vista previa -->
+          <div class="mb-3 text-center">
+            <label class="form-label fw-semibold d-block mb-2">
+              <i class="fas fa-image me-2"></i>Foto de Perfil
+            </label>
+
+            <!-- Vista previa -->
+            <div class="d-flex flex-column align-items-center">
+              <img [src]="previewUrl || tutor.foto || '/assets/default-profile.png'" alt="Vista previa"
+                class="rounded-circle shadow-sm border mb-3" width="120" height="120" />
+
             </div>
-            <button type="submit" class="btn btn-success w-100">
-              <i class="fas fa-save me-2"></i>Guardar Cambios
+          </div>
+          <div class="mb-3">
+            <label class="form-label">
+              <i class="fas fa-image me-2"></i>Subir Foto de Perfil:
+            </label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" />
+          </div>
+          <div class="d-flex justify-content-center gap-3 mt-4">
+            <button type="button" class="btn btn-outline-secondary px-4" (click)="cancelarEdicion()">
+              <i class="fas fa-times me-2"></i>Cancelar
             </button>
-          </form>
-        </div>
+
+            <button type="submit" class="btn btn-success px-4">
+              <i class="fas fa-save me-2"></i>
+              {{ modoCompletar ? 'Completar Perfil' : 'Guardar Cambios' }}
+            </button>
+          </div>
+        </form>
+        <ng-template #skeletonRight>
+          <div class="skeleton-text w-50 mb-2"></div>
+          <div class="skeleton-text w-75 mb-2"></div>
+          <div class="skeleton-text w-25"></div>
+        </ng-template>
       </div>
     </div>
   </div>
