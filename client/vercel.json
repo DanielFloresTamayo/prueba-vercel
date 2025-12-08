@@ -1,12 +1,11 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
-    
     "builds": [
         {
             "src": "package.json",
             "use": "@vercel/static-build",
             "config": {
-                "distDir": "client/dist/proyecto_final"
+                "distDir": "client/dist/proyecto_final/browser"
             }
         }
     ],
