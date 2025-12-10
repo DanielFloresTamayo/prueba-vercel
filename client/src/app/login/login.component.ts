@@ -74,7 +74,7 @@ export class LoginComponent {
         const match = bcrypt.compareSync(password, tutor.contrasena);
         if (match) {
           Swal.close();
-          console.log(`✅ Se inició sesión con el tutor: ${tutor.nombres} ${tutor.apellidos}`);
+         // console.log(`✅ Se inició sesión con el tutor: ${tutor.nombres} ${tutor.apellidos}`);
 
           localStorage.setItem('usuario', JSON.stringify({ id: tutor.id, tipo: 'tutor' }));
           // alert(`¡Bienvenido, ${tutor.nombres}!`);

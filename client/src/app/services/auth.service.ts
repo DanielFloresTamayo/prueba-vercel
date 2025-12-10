@@ -12,7 +12,7 @@ export class AuthService {
     const usuario = localStorage.getItem('usuario');
     if (usuario) {
       const datos = JSON.parse(usuario);
-      console.log(`👋 Se cerró sesión con el tutor: ${datos.apellidos} ${datos.nombres}`);
+   //   console.log(`👋 Se cerró sesión con el tutor: ${datos.apellidos} ${datos.nombres}`);
     }
     localStorage.clear();
 
