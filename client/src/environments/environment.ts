@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000' // JSON Server
+  apiUrl: 'https://grateful-essence-production-2233.up.railway.app' // JSON Server
 };
