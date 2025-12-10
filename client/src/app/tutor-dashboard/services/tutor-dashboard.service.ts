@@ -7,8 +7,8 @@ import { Clase } from '../../models/clase.model';
   providedIn: 'root'
 })
 export class TutorDashboardService {
-  private apiUrl = 'http://localhost:3000/tutors'; // o "usuarios", según tu JSON Server
-  private apiUrlClases = 'http://localhost:3000/clases';
+  private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/tutors'; // o "usuarios", según tu JSON Server
+  private apiUrlClases = 'https://grateful-essence-production-2233.up.railway.app/clases';
 
   constructor(private http: HttpClient) { }
 
@@ -54,13 +54,13 @@ export class TutorDashboardService {
 
   // GET citas según el tutor (expand participante y clase)
   getCitasByTutor(tutorId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/citas?tutorId=${tutorId}&_expand=participante&_expand=clase`);
+    return this.http.get<any[]>(`https://grateful-essence-production-2233.up.railway.app/citas?tutorId=${tutorId}&_expand=participante&_expand=clase`);
   }
 
 
   // PATCH para cambiar estado (aceptar/rechazar/completada)
   updateEstadoCita(id: number, estado: string): Observable<any> {
-    return this.http.patch(`http://localhost:3000/citas/${id}`, { estado });
+    return this.http.patch(`https://grateful-essence-production-2233.up.railway.app/citas/${id}`, { estado });
   }
 
   // (opcional) otros métodos futuros como getClases, getComentarios, etc.

@@ -21,8 +21,7 @@ export class AuthService {
 
   }
 
- 
-  logout(): void {
+   logout(): void {
     // Limpiar token y localStorage
     localStorage.removeItem('token');
     this.token = null;
