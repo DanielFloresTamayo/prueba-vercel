@@ -1,80 +1,128 @@
-/* 🌆 Fondo global */
+/* -----------------------------------------
+   GLOBAL
+----------------------------------------- */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  background: #f5f7fa;
+}
+
+/* Wrapper con fondo */
 .tdash-wrapper {
   min-height: 100vh;
-  background-image: url('../../assets/imagenes/2.jpg');
+  background-image: url('../../assets/imagenes/2.jpg'); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 30px 0;
   position: relative;
+  padding: 40px 0;
 }
 
 .tdash-wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
   z-index: 0;
 }
 
-/* Layout */
+/* Contenedor global */
 .tdash-container {
   width: 100%;
   position: relative;
   z-index: 10;
+  padding: 0 30px;
 }
 
-.tdash-container > .d-flex {
-  gap: 28px;
-}
-
-/* 🧊 Sidebar estilo glass */
+/* -----------------------------------------
+   SIDEBAR
+----------------------------------------- */
 .tdash-sidebar {
-  width: 230px;
-  background: rgba(255, 255, 255, 0.32);
-  backdrop-filter: blur(12px) saturate(140%);
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+  width: 240px;
+  position: fixed;
+  top: 50px;
+  left: 85px;
+  bottom: 50px;
+  padding: 22px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(14px) saturate(150%);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
   display: flex;
   flex-direction: column;
   transition: all 0.25s ease;
-  z-index: 30;
+  z-index: 10;
 }
 
 .tdash-sidebar:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
 }
 
 /* Logo circular */
+/* Logo */
 .logo-circle {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #007bff, #00bfff);
-  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  margin: 0 auto 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Borde degradado intacto */
+.logo-circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #5c5c54, #00bfff);
+  border-radius: 16px;
+  z-index: 1;
+}
+
+/* Imagen interna que NO rompe nada */
+.logo-circle::after {
+  content: "";
+  position: absolute;
+  inset: 3px;                       /* grosor del borde degradado */
+  background-image: url('../../assets/imagenes/icono.png');
+  background-size: cover;           /* se adapta sin deformarse */
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  z-index: 2;
+}
+
+
+/* Branding */
+.tdash-sidebar .brand {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 /* Links */
-.tdash-sidebar .nav-link {
+.tdash-sidebar .nav-link,
+.tdash-sidebar a.nav-link {
   color: #0b2c54;
   padding: 0.65rem 0.9rem;
   margin-bottom: 0.35rem;
   font-weight: 500;
-  transition: all 0.25s ease;
   display: flex;
   align-items: center;
+  border-radius: 50px;
+  transition: all .25s ease;
 }
 
-.tdash-sidebar .nav-link.active,
-.tdash-sidebar .nav-link:hover {
+.tdash-sidebar .nav-link:hover,
+.tdash-sidebar .nav-link.active {
   background: linear-gradient(90deg, #007bff, #00bfff);
   color: #fff !important;
-  box-shadow: 0 8px 22px rgba(0, 123, 255, 0.2);
   transform: translateX(4px);
+  box-shadow: 0 8px 22px rgba(0, 123, 255, 0.25);
 }
 
 /* Logout */
@@ -83,31 +131,34 @@
   background: transparent;
   color: #dc3545;
   font-weight: 600;
-  border-radius: 10px;
-  padding: 0.5rem;
-  transition: all 0.25s ease;
+  border-radius: 12px;
+  padding: 0.6rem;
+  transition: all .25s ease;
 }
 
 .btn-logout:hover {
   background: #dc3545;
-  color: white;
+  color: #fff;
   transform: scale(1.04);
 }
 
-/* Contenido principal transparente */
+/* -----------------------------------------
+   MAIN CONTENT
+----------------------------------------- */
 .tdash-main {
-  min-height: 420px;
-  background: transparent;
-  padding: 28px;
+  flex: 1;
+  margin-left: 310px; /* unificado con participante */
+  margin-right: 30px;
+  margin-top: 0;
+  padding: 28px; /* unificado con participante */
+  min-height: 100vh;
+  background: transparent; /* transparente para que se vea el blur del wrapper */
   border-radius: 16px;
   transition: all 0.25s ease;
+  animation: fadeIn 0.6s ease;
 }
 
-/* Animación */
-.animate-fade {
-  animation: fadeIn 0.6s ease-in-out;
-}
-
+/* Animación fade */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -121,36 +172,39 @@
 
 /* Botón hamburguesa */
 .menu-toggle {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 300;
+  font-size: 1.8rem;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 10px 14px;
+  border-radius: 12px;
   border: none;
-  background: transparent;
-  font-size: 1.6rem;
-  color: #0b2c54;
-  cursor: pointer;
-  position: absolute;
-  top: 12px;
-  left: 16px;
-  z-index: 200;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: all .25s ease;
 }
 
 .menu-toggle:hover {
-  color: #007bff;
+  background: rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
 }
 
-/* Responsive */
+/* Responsive (móvil) */
 @media (max-width: 768px) {
-  .tdash-container .d-flex {
-    flex-direction: column;
-  }
-
   .tdash-sidebar {
-    position: absolute;
-    top: 60px;
+    position: fixed;
+    top: 0;
     left: 0;
-    height: calc(100vh - 60px);
+    height: 100vh;
     width: 240px;
     transform: translateX(-110%);
     opacity: 0;
     visibility: hidden;
+    z-index: 999;
+    transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
   }
 
   .tdash-sidebar.open {
@@ -160,8 +214,17 @@
   }
 
   .tdash-main {
-    margin-top: 60px;
-    width: 100%;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    padding: 20px;
+  }
+
+  .menu-toggle {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 1001;
   }
 }
 
@@ -184,12 +247,10 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-
   transition: 
     max-height 0.35s ease,
     opacity 0.25s ease,
     filter 0.3s ease;
-    
   opacity: 0;
   filter: blur(4px);
   padding-left: 6px;
@@ -207,6 +268,7 @@
   padding: 0.5rem 0.9rem !important;
   background: rgba(255, 255, 255, 0.25);
   transition: all 0.25s ease;
+  border-radius: 50px;
 }
 
 .sub-item:hover {
@@ -223,4 +285,17 @@
 
 .rotate.open {
   transform: rotate(180deg);
+}
+
+/* Overlay opcional */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 998;
+}
+
+.sidebar-overlay.active {
+  display: block;
 }

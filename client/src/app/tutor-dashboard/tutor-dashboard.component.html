@@ -5,6 +5,9 @@
       <i class="fas" [ngClass]="{ 'fa-bars': !isSidebarOpen, 'fa-times': isSidebarOpen }"></i>
     </button>
 
+    <!-- Overlay opcional para bloquear fondo en móvil -->
+    <div class="sidebar-overlay" [class.active]="isSidebarOpen" (click)="toggleSidebar()"></div>
+
     <div class="d-flex gap-4">
       <!-- Sidebar -->
       <aside class="tdash-sidebar p-3 rounded-4 shadow-sm" [ngClass]="{ open: isSidebarOpen, closed: !isSidebarOpen }">
@@ -21,7 +24,6 @@
           <a routerLink="cambiar-contrasena" routerLinkActive="active" class="nav-link rounded-pill">
             <i class="fas fa-key me-2"></i>Contraseña
           </a>
-
 
           <!-- ==== BOTÓN PRINCIPAL ==== -->
           <div class="submenu-wrapper">
@@ -50,7 +52,6 @@
           <a routerLink="comentarios" routerLinkActive="active" class="nav-link rounded-pill">
             <i class="fas fa-comment-dots me-2"></i>Reseñas
           </a>
-
         </nav>
 
         <div class="mt-4">
