@@ -102,7 +102,7 @@ export class LoginComponent {
           const match = bcrypt.compareSync(password, participante.contrasena);
           if (match) {
             Swal.close();
-             console.log(`✅ Se inició sesión con el participante: ${participante.nombres} ${participante.apellidos}`);
+           // console.log(`✅ Se inició sesión con el participante: ${participante.nombres} ${participante.apellidos}`);
 
             localStorage.setItem('usuario', JSON.stringify({ id: participante.id, tipo: 'participante' }));
             localStorage.setItem('userId', String(participante.id));
@@ -143,9 +143,9 @@ export class LoginComponent {
   /** Ir a registro */
   goToRegister() {
     this.router.navigate(['/registro-tutor']);
-    
+
   }
-    goToRegister1() {
+  goToRegister1() {
     this.router.navigate(['/registro-participante']);
 
   }

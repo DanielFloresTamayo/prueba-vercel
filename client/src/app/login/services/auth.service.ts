@@ -14,7 +14,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/usuarios';
+  //private apiUrl = 'http://localhost:3000/usuarios';
   private token: string | null = null;
 
   constructor(private http: HttpClient) {
@@ -28,19 +28,6 @@ export class AuthService {
     this.token = null;
     console.log('Sesión cerrada exitosamente');
   }
-
-
-
-  /*
- Lee y decodifica el token almacenado.
- Esto permite extraer la información (por ejemplo, el rol)
- que luego se puede utilizar para redirigir al usuario o controlar accesos.
- Decodifica el token almacenado y devuelve su contenido.
-*/
-
-  /**
- * Método de conveniencia para obtener el objeto decodificado.
- */
 
   private handleError(error: HttpErrorResponse) {
     console.error('Error en la petición:', error);

@@ -6,7 +6,7 @@ import { Observable, forkJoin, map } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private baseUrl = 'http://localhost:3000'; // tu JSON server
+  private baseUrl = 'https://grateful-essence-production-2233.up.railway.app'; // tu JSON server
 
   constructor(private http: HttpClient) {}
 
