@@ -11,10 +11,10 @@ import { Cita } from '../../models/cita.model';
   providedIn: 'root'
 })
 export class ParticipanteDashboardService {
-  private apiUrl = 'http://localhost:3000/participantes'; // API de participantes
-  private apiUrlClases = 'http://localhost:3000/clases';
-  private apiUrlResenas = 'http://localhost:3000/resenas';
-  private apiUrlCitas = 'http://localhost:3000/citas';
+  private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/participantes'; // API de participantes
+  private apiUrlClases = 'https://grateful-essence-production-2233.up.railway.app/clases';
+  private apiUrlResenas = 'https://grateful-essence-production-2233.up.railway.app/resenas';
+  private apiUrlCitas = 'https://grateful-essence-production-2233.up.railway.app/citas';
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +24,7 @@ export class ParticipanteDashboardService {
   }
   // 🔹 Obtener información del tutor por ID
   getTutorById(id: string) {
-    return this.http.get<any>(`http://localhost:3000/tutors/${id}`);
+    return this.http.get<any>(`https://grateful-essence-production-2233.up.railway.app/tutors/${id}`);
   }
 
   // ✅ Actualizar contraseña del participante
