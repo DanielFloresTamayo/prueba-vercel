@@ -35,6 +35,8 @@ export class ClasesComponent implements OnInit {
     'Angular',
     'Inglés',
     'Electrónica',
+    'Bases de datos',
+    'Sistemas operativos',
     'Otros'
   ];
 
@@ -75,7 +77,7 @@ export class ClasesComponent implements OnInit {
     this.tutorService.getClasesByTutor(tutorId).subscribe({
       next: (data) => {
         this.clases = data;
-        console.log("Clases del tutor:", data);
+     //   console.log("Clases del tutor:", data);
       },
       error: () => {
         Swal.fire({

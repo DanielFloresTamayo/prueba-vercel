@@ -14,7 +14,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  //private apiUrl = 'http://localhost:3000/usuarios';
+  private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/usuarios';
   private token: string | null = null;
 
   constructor(private http: HttpClient) {

@@ -49,7 +49,7 @@ export class TutorCitasComponent implements OnInit {
       next: (data) => {
         this.citas = data;
         this.cargando = false;
-        console.log('📌 Citas cargadas:', this.citas);
+       // console.log('📌 Citas cargadas:', this.citas);
       },
       error: (err) => {
         console.error('❌ Error al obtener citas:', err);
