@@ -46,12 +46,15 @@ export class ParticipanteClasesComponent implements OnInit {
     const ahora = new Date();
 
     const diffMs = ahora.getTime() - fechaPublicacion.getTime();
-    const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDias = Math.floor(diffHoras / 24);
 
-    if (diffDias === 0) return 'Publicado hoy';
+    if (diffHoras < 1) return 'Publicado hace unos minutos';
+    if (diffHoras < 24) return `Publicado hace ${diffHoras} horas`;
     if (diffDias === 1) return 'Publicado hace 1 día';
     return `Publicado hace ${diffDias} días`;
   }
+
 
   ngOnInit(): void {
     this.participanteService.getClasesConTutor().subscribe({
