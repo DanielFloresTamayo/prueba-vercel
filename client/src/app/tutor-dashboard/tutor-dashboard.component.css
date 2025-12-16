@@ -89,7 +89,7 @@ body {
   content: "";
   position: absolute;
   inset: 3px;                       /* grosor del borde degradado */
-  background-image: url('../../assets/imagenes/icono.png');
+  background-image: url('../../assets/imagenes/iconos.png');
   background-size: cover;           /* se adapta sin deformarse */
   background-position: center;
   background-repeat: no-repeat;
