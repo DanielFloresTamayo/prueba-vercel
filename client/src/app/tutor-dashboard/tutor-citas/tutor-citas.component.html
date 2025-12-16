@@ -2,9 +2,26 @@
 
   <h2 class="titulo">📬 Solicitudes de Citas</h2>
 
+  <div *ngIf="!cargando && citas.length === 0" class="no-citas-card">
+    <i class="bi bi-calendar-x no-citas-icon"></i>
+    <h3>No tienes solicitudes por ahora</h3>
+    <p>Cuando un participante solicite una clase, aparecerá aquí.</p>
+  </div>
+
+  <div class="filtros" >
+    <button (click)="filtrarPorEstado('todas')">Todas</button>
+    <button (click)="filtrarPorEstado('pendiente')">Pendientes</button>
+    <button (click)="filtrarPorEstado('aceptada')">Aceptadas</button>
+    <button (click)="filtrarPorEstado('rechazada')">Rechazadas</button>
+    <button (click)="filtrarPorEstado('completada')">Completadas</button>
+  </div>
+
   <div class="clases-grid">
 
-    <div class="clase-card card-anim" *ngFor="let cita of citas">
+    <div class="clase-card card-anim" 
+         *ngFor="let cita of citasFiltradas; trackBy: trackByCita"
+        [ngClass]="cita.estado"
+        [attr._anim]="cita._anim ? 'true' : null">
 
 
       <div class="right-section">
@@ -57,25 +74,37 @@
 
           <div class="info-row">
             <div class="label"><i class="bi bi-calendar-event"></i><span>Fecha:</span></div>
-            <div class="value">{{ cita.fechaSolicitud | date:'medium' }}</div>
+            <div class="value">{{ getFechaRelativa(cita.fechaSolicitud) }}</div>
           </div>
 
           <div class="info-row">
-            <div class="label"><i class="bi bi-flag"></i><span>Estado:</span></div>
-            <div class="value estado"
-                 [ngClass]="cita.estado">
-              {{ cita.estado }}
+            <div class="label">
+              <i class="bi bi-flag"></i><span>Estado:</span>
+            </div>
+
+            <div class="value estado" [ngClass]="cita.estado">
+              <i [ngClass]="{
+      'bi bi-hourglass-split': cita.estado === 'pendiente',
+      'bi bi-check2-circle': cita.estado === 'aceptada',
+      'bi bi-x-circle': cita.estado === 'rechazada',
+      'bi bi-award': cita.estado === 'completada'
+    }"></i>
+
+              <span class="badge-text">{{ cita.estado }}</span>
             </div>
           </div>
+
 
         </div>
 
         <!-- BOTONES -->
-        <div class="acciones">
-          <button class="btn aceptar">Aceptar</button>
-          <button class="btn rechazar">Rechazar</button>
+        <div class="acciones" *ngIf="cita.estado === 'pendiente'">
+          <button class="btn aceptar" (click)="aceptarCita(cita)">Aceptar</button>
+          <button class="btn rechazar" (click)="rechazarCita(cita)">Rechazar</button>
         </div>
-
+        <div class="acciones" *ngIf="cita.estado === 'aceptada'">
+          <button class="btn completar" (click)="completarCita(cita)">Marcar como completada</button>
+        </div>
       </div>
 
     </div>
