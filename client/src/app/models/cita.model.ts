@@ -11,9 +11,7 @@ export interface Cita {
   fechaSolicitud: string;       // fecha de la solicitud en formato ISO (string)
   estado: 'pendiente' | 'completada'| 'rechazada'|'aceptada'; // estado de la cita
   mensaje?: string;    
+  tieneResena: boolean;
   
-  // Propiedades opcionales para poder expandir en Angular si se requiere
-  tutor?: Tutor;
-  participante?: Participante;
-  clase?: Clase;
+
 }

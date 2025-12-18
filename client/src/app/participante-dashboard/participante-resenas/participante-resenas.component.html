@@ -1,0 +1,43 @@
+<div class="resena-wrapper" *ngIf="accesoValido">
+
+  <!-- FORMULARIO -->
+  <div class="glass-card fade-in" *ngIf="!enviado">
+
+    <h2>
+      <i class="bi bi-chat-left-quote"></i>
+      Dejar reseña
+    </h2>
+
+    <p class="context">
+      Estás evaluando a <strong>{{ tutorNombre }}</strong>
+    </p>
+
+    <div class="input-group">
+      <textarea [(ngModel)]="comentario" placeholder="Cuéntanos cómo fue tu experiencia..."
+        [disabled]="enviando"></textarea>
+    </div>
+
+    <button (click)="enviarResena()" [disabled]="!comentario.trim() || enviando" class="primary-btn">
+      <span *ngIf="!enviando">
+        <i class="bi bi-send"></i> Enviar reseña
+      </span>
+      <span *ngIf="enviando">
+        <i class="bi bi-hourglass-split"></i> Enviando...
+      </span>
+    </button>
+
+    <p class="error" *ngIf="error">
+      <i class="bi bi-exclamation-circle"></i> {{ error }}
+    </p>
+
+
+  </div>
+
+  <!-- CONFIRMACIÓN -->
+  <div class="glass-card success fade-in" *ngIf="enviado">
+    <i class="bi bi-check-circle-fill"></i>
+    <h3>¡Reseña enviada!</h3>
+    <p>Gracias por compartir tu experiencia.</p>
+  </div>
+
+</div>

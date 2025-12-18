@@ -75,10 +75,10 @@ export class ParticipanteDashboardService {
   getCitasByClase(claseId: number): Observable<Cita[]> {
     return this.http.get<Cita[]>(`${this.apiUrlCitas}?claseId=${claseId}`);
   }
-//traer toda la cita con el participante, tutor y clase
- getCitasByParticipante(participanteId: number) {
-  return this.http.get<any[]>(`${this.apiUrlCitas}?participanteId=${participanteId}&_expand=tutor&_expand=clase`);
-}
+  //traer toda la cita con el participante, tutor y clase
+  getCitasByParticipante(participanteId: number) {
+    return this.http.get<any[]>(`${this.apiUrlCitas}?participanteId=${participanteId}&_expand=tutor&_expand=clase`);
+  }
 
   crearCita(cita: Cita): Observable<Cita> {
     return this.http.post<Cita>(this.apiUrlCitas, cita);
@@ -87,6 +87,11 @@ export class ParticipanteDashboardService {
   cancelarCita(idCita: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlCitas}/${idCita}`);
   }
-
+  // 🔹 Marcar cita como reseñada
+  updateCitaTieneResena(citaId: number): Observable<Cita> {
+    return this.http.patch<Cita>(`${this.apiUrlCitas}/${citaId}`, {
+      tieneResena: true
+    });
+  }
   
 }

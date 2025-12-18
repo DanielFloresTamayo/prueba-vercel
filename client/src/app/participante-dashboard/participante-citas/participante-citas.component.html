@@ -8,9 +8,7 @@
 
       <!-- Avatar del tutor -->
       <div class="left-section">
-        <img class="avatar"
-             [src]="cita.tutor?.foto || '/assets/imagenes/default-profile.png'"
-             alt="Tutor">
+        <img class="avatar" [src]="cita.tutor?.foto || '/assets/imagenes/default-profile.png'" alt="Tutor">
       </div>
 
       <div class="right-section">
@@ -77,6 +75,16 @@
           </div>
 
         </div>
+        <!-- Acción: Dejar reseña -->
+        <div class="acciones" *ngIf="puedeDejarResena(cita)">
+          <button class="btn-resena"
+          (click)="irAResena(cita.id!)">
+            <i class="bi bi-chat-left-text"></i>
+            Dejar reseña
+          </button>
+        </div>
+
+
 
       </div>
 
