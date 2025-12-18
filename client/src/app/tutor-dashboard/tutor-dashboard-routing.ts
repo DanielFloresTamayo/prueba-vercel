@@ -4,7 +4,7 @@ import { TutorProfileComponent } from './tutor-profile/tutor-profile.component';
 import { TutorChangePasswordComponent } from './tutor-change-password/tutor-change-password.component';
 import { ClasesComponent } from './tutor-classes/clases.component';
 import { TutorCitasComponent } from './tutor-citas/tutor-citas.component';
-// import { TutorCommentsComponent } from './tutor-comments/tutor-comments.component';
+import { TutorResenasComponent } from './tutor-resenas/tutor-resenas.component';
 
 export const TUTOR_DASHBOARD_ROUTES: Routes = [
   {
@@ -15,7 +15,7 @@ export const TUTOR_DASHBOARD_ROUTES: Routes = [
       { path: 'cambiar-contrasena', component: TutorChangePasswordComponent },
       { path: 'clases', component: ClasesComponent },
       { path: 'citas', component: TutorCitasComponent },
-      // { path: 'comentarios', component: TutorCommentsComponent },
+      { path: 'resenas', component: TutorResenasComponent },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' }
     ]
   }

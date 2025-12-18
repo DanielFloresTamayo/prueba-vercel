@@ -1,0 +1,29 @@
+<div class="resenas-wrapper">
+    <h3>Reseñas recientes</h3>
+
+    <p class="loading" *ngIf="loading">
+        <i class="bi bi-hourglass-split"></i> Cargando reseñas...
+    </p>
+
+    <p class="empty" *ngIf="!loading && resenas.length === 0">
+        <i class="bi bi-chat-square-text"></i>
+        Aún no tienes reseñas
+    </p>
+    <div class="resena-card fade-in" *ngFor="let r of resenas">
+        <div class="header">
+            <i class="bi bi-person-circle"></i>
+            <span class="nombre">
+                {{ r.participante?.nombres }} {{ r.participante?.apellidos }}
+            </span>
+            <span class="fecha">{{ r.fecha | date:'mediumDate' }}</span>
+            <span class="fecha">
+                {{ getFechaRelativa(r.fecha!) }}
+            </span>
+
+        </div>
+        <p class="comentario">
+            {{ r.comentario }}
+        </p>
+    </div>
+
+</div>

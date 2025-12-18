@@ -1,3 +1,5 @@
+import { Participante } from "./participante.model";
+
 export interface Resena {
     id?: number;
     citaId: number;  
@@ -6,4 +8,6 @@ export interface Resena {
     comentario: string;
     rating?: number;
     fecha?: string;
+
+    participante?: Participante;
 }

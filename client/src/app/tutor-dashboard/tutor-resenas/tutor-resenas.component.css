@@ -1,0 +1,124 @@
+/* ===== Wrapper ===== */
+.resenas-wrapper {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  overflow: visible;
+}
+
+/* ===== Estados ===== */
+.loading,
+.empty {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+  opacity: 0.85;
+}
+
+.loading i,
+.empty i {
+  margin-right: 6px;
+  font-size: 1.1rem;
+}
+
+/* ===== Card Glass (Apple-style) ===== */
+.resena-card {
+  position: relative;
+  z-index: 1;
+
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 18px;
+
+  padding: 1.4rem 1.5rem;
+
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.4) inset;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  transition:
+    transform 0.35s cubic-bezier(.22, 1, .36, 1),
+    box-shadow 0.35s cubic-bezier(.22, 1, .36, 1);
+}
+
+
+.resena-card:hover {
+  transform: translateY(-8px);
+  z-index: 10;
+
+  box-shadow:
+    0 32px 60px rgba(0, 0, 0, 0.35),
+    0 12px 20px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+/* ===== Header ===== */
+.resena-card .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #333;
+  opacity: 0.9;
+}
+
+.resena-card .header i {
+  font-size: 1.3rem;
+  color: #444;
+}
+
+/* ===== Fecha ===== */
+.fecha {
+  font-size: 0.75rem;
+  color: #666;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+/* ===== Comentario ===== */
+.comentario {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #111;
+  margin: 0;
+}
+
+/* ===== Animación ===== */
+.fade-in {
+  animation: fadeOpacity 0.45s ease forwards;
+}
+
+@keyframes fadeOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .resenas-wrapper {
+    padding: 1rem;
+  }
+
+  .resena-card {
+    padding: 1.2rem;
+  }
+
+  .comentario {
+    font-size: 0.9rem;
+  }
+}

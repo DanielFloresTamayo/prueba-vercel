@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Clase } from '../../models/clase.model';
+import { Resena } from '../../models/resena.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { Clase } from '../../models/clase.model';
 export class TutorDashboardService {
   private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/tutors'; // o "usuarios", según tu JSON Server
   private apiUrlClases = 'https://grateful-essence-production-2233.up.railway.app/clases';
+  private apiUrlResenas = 'https://grateful-essence-production-2233.up.railway.app/resenas';
 
   constructor(private http: HttpClient) { }
 
@@ -48,10 +50,6 @@ export class TutorDashboardService {
   }
 
 
-  // =========================
-  //  Citas del tutor
-  // =========================
-
   // GET citas según el tutor (expand participante y clase)
   getCitasByTutor(tutorId: number): Observable<any[]> {
     return this.http.get<any[]>(`https://grateful-essence-production-2233.up.railway.app/citas?tutorId=${tutorId}&_expand=participante&_expand=clase`);
@@ -64,4 +62,11 @@ export class TutorDashboardService {
   }
 
   // (opcional) otros métodos futuros como getClases, getComentarios, etc.
+
+  getResenasByTutorConParticipante(tutorId: number): Observable<Resena[]> {
+    return this.http.get<Resena[]>(
+      `${this.apiUrlResenas}?tutorId=${tutorId}&_expand=participante&_sort=fecha&_order=desc`
+    );
+  }
+
 }
