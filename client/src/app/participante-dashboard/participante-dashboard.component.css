@@ -62,13 +62,39 @@ body {
 }
 
 /* Logo */
+/* Logo */
 .logo-circle {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #007bff, #00bfff);
   border-radius: 16px;
   margin: 0 auto 12px;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Borde degradado intacto */
+.logo-circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #5c5c54, #00bfff);
+  border-radius: 16px;
+  z-index: 1;
+}
+
+/* Imagen interna que NO rompe nada */
+.logo-circle::after {
+  content: "";
+  position: absolute;
+  inset: 3px;                       /* grosor del borde degradado */
+  background-image: url('../../assets/imagenes/icono.png');
+  background-size: cover;           /* se adapta sin deformarse */
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  z-index: 2;
+}
+
 
 .tdash-sidebar .brand {
   text-align: center;
@@ -171,7 +197,7 @@ body {
     position: fixed;
     top: 24px;
     left: 24px;
-    z-index: 1000;
+    z-index: 2001;
   }
 }
 
