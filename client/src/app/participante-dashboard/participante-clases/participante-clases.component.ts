@@ -81,7 +81,8 @@ export class ParticipanteClasesComponent implements OnInit {
       claseId: clase.id!,
       fechaSolicitud: new Date().toISOString(),
       estado: 'pendiente',
-      mensaje: ''   // opcional
+      mensaje: '',   // opcional
+      tieneResena: false
     };
 
     this.participanteService.crearCita(nuevaCita).subscribe({
