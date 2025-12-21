@@ -17,6 +17,13 @@
         [disabled]="enviando"></textarea>
     </div>
 
+    
+    <div class="rating">
+      <span *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)" [class.active]="star <= rating">
+        ★
+      </span>
+    </div>
+
     <button (click)="enviarResena()" [disabled]="!comentario.trim() || enviando" class="primary-btn">
       <span *ngIf="!enviando">
         <i class="bi bi-send"></i> Enviar reseña

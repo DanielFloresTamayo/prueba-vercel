@@ -16,6 +16,7 @@ import { Cita } from '../../models/cita.model';
 export class ParticipanteResenasComponent {
 
   comentario: string = '';
+  rating = 0;
   tutorNombre: string = '';
   citaId!: number;
   cita!: Cita;
@@ -50,6 +51,9 @@ export class ParticipanteResenasComponent {
 
     this.validarCita();
   }
+ setRating(valor: number): void {
+    this.rating = valor;
+  }
 
   validarCita(): void {
     this.dashboardService.getCitasByParticipante(this.userId).subscribe(citas => {
@@ -64,7 +68,7 @@ export class ParticipanteResenasComponent {
         return;
       }
 
-      // ✅ Cita válida
+      
       this.cita = citaEncontrada;
       this.tutorNombre = `${citaEncontrada.tutor?.nombres} ${citaEncontrada.tutor?.apellidos}`;
       this.accesoValido = true;
@@ -73,7 +77,7 @@ export class ParticipanteResenasComponent {
 
   enviarResena(): void {
     if (!this.comentario.trim() || !this.cita?.id) return;
-    // if (!this.cita || this.cita.id === undefined) return;
+    
     this.enviando = true;
 
     const nuevaResena = {
@@ -81,11 +85,12 @@ export class ParticipanteResenasComponent {
       tutorId: this.cita.tutorId,
       participanteId: this.userId,
       comentario: this.comentario.trim(),
+      rating: this.rating,
       fecha: new Date().toISOString()
     };
 
 
-    this.dashboardService.createResena(nuevaResena).subscribe({
+   this.dashboardService.createResena(nuevaResena).subscribe({
       next: () => {
 
         this.dashboardService
@@ -111,12 +116,6 @@ export class ParticipanteResenasComponent {
     });
   }
 
-  /*
-  
-    cargarCita() {
-      this.dashboardService.getCitas().subscribe(citas => {
-        this.cita = citas.find(c => c.id === this.citaId)!;
-      });
-    }
-  */
+
+
 }
