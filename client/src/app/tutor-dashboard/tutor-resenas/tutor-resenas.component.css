@@ -1,124 +1,148 @@
-/* ===== Wrapper ===== */
-.resenas-wrapper {
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  overflow: visible;
-}
-
-/* ===== Estados ===== */
-.loading,
-.empty {
-  text-align: center;
-  font-size: 0.95rem;
-  color: #555;
-  opacity: 0.85;
-}
-
-.loading i,
-.empty i {
-  margin-right: 6px;
-  font-size: 1.1rem;
-}
-
-/* ===== Card Glass (Apple-style) ===== */
-.resena-card {
-  position: relative;
-  z-index: 1;
-
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 18px;
-
-  padding: 1.4rem 1.5rem;
-
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.12),
-    0 1px 0 rgba(255, 255, 255, 0.4) inset;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-
-  transition:
-    transform 0.35s cubic-bezier(.22, 1, .36, 1),
-    box-shadow 0.35s cubic-bezier(.22, 1, .36, 1);
-}
-
-
-.resena-card:hover {
-  transform: translateY(-8px);
-  z-index: 10;
-
-  box-shadow:
-    0 32px 60px rgba(0, 0, 0, 0.35),
-    0 12px 20px rgba(0, 0, 0, 0.18),
-    0 1px 0 rgba(255, 255, 255, 0.5) inset;
-}
-
-/* ===== Header ===== */
-.resena-card .header {
+/* ===============================
+   TÍTULO DEL MÓDULO
+================================ */
+.resenas-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 0.85rem;
-  color: #333;
-  opacity: 0.9;
+  justify-content: center;
+  gap: 10px;
+
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1f2937;
+
+  margin: 0 0 2rem 0;
 }
 
-.resena-card .header i {
-  font-size: 1.3rem;
-  color: #444;
+.resenas-title i {
+  font-size: 1.5rem;
+  color:  #374151;
 }
 
-/* ===== Fecha ===== */
-.fecha {
-  font-size: 0.75rem;
-  color: #666;
-  background: rgba(0, 0, 0, 0.05);
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
+/* ===============================
+   CARD BASE
+================================ */
+.resena-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  padding: 1.6rem;
+  margin-bottom: 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+  transition:
+    transform 0.35s cubic-bezier(.22,1,.36,1),
+    box-shadow 0.35s cubic-bezier(.22,1,.36,1);
 }
 
-/* ===== Comentario ===== */
-.comentario {
+.resena-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 28px 50px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ===============================
+   FIELD (mini-form)
+================================ */
+.resena-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===============================
+   LABEL
+================================ */
+.resena-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.resena-label i {
   font-size: 0.95rem;
-  line-height: 1.55;
-  color: #111;
-  margin: 0;
+  color: #000;
 }
 
-/* ===== Animación ===== */
+/* ===============================
+   VALUE
+================================ */
+.resena-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* ===============================
+   RATING
+================================ */
+.rating {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  font-size: 1.15rem;
+  color: #d1d5db;
+  line-height: 1;
+}
+
+.star.filled {
+  color: #f5c518;
+}
+
+/* ===============================
+   COMENTARIO
+================================ */
+.comentario {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #000;
+}
+
+/* ===============================
+   ANIMACIÓN
+================================ */
 .fade-in {
-  animation: fadeOpacity 0.45s ease forwards;
+  animation: fadeOpacity 0.4s ease forwards;
 }
 
 @keyframes fadeOpacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-/* ===== Responsive ===== */
+
+/* ===============================
+   RESPONSIVE
+================================ */
 @media (max-width: 600px) {
-  .resenas-wrapper {
-    padding: 1rem;
+  .resenas-title {
+    font-size: 1.4rem;
   }
 
   .resena-card {
-    padding: 1.2rem;
+    padding: 1.3rem;
   }
 
+  .resena-value,
   .comentario {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 }

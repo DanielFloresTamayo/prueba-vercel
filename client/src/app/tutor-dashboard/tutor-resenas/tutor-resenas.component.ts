@@ -17,7 +17,7 @@ export class TutorResenasComponent {
     private tutorDashboardService: TutorDashboardService
   ) { }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     const storedUser = localStorage.getItem('usuario');
     if (!storedUser) {
       this.loading = false;
@@ -30,7 +30,15 @@ export class TutorResenasComponent {
       .getResenasByTutorConParticipante(tutorId)
       .subscribe({
         next: (res) => {
-          this.resenas = res.slice(0, 2); // 👈 SOLO LAS 2 MÁS RECIENTES
+          this.resenas = res
+            .sort((a, b) => {
+              const fechaA = new Date(a.fecha!).getTime();
+              const fechaB = new Date(b.fecha!).getTime();
+              return fechaB - fechaA; 
+            })
+
+
+            .slice(0, 3); 
           this.loading = false;
         },
         error: () => {

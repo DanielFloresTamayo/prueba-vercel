@@ -1,29 +1,56 @@
-<div class="resenas-wrapper">
-    <h3>Reseñas recientes</h3>
+<!-- Título del módulo -->
+<h3 class="resenas-title center">
+  <i class="bi bi-chat-left-text"></i>
+  Tus reseñas
+</h3>
 
-    <p class="loading" *ngIf="loading">
-        <i class="bi bi-hourglass-split"></i> Cargando reseñas...
-    </p>
+<!-- Cards -->
+<div class="resena-card fade-in" *ngFor="let r of resenas">
 
-    <p class="empty" *ngIf="!loading && resenas.length === 0">
-        <i class="bi bi-chat-square-text"></i>
-        Aún no tienes reseñas
-    </p>
-    <div class="resena-card fade-in" *ngFor="let r of resenas">
-        <div class="header">
-            <i class="bi bi-person-circle"></i>
-            <span class="nombre">
-                {{ r.participante?.nombres }} {{ r.participante?.apellidos }}
-            </span>
-            <span class="fecha">{{ r.fecha | date:'mediumDate' }}</span>
-            <span class="fecha">
-                {{ getFechaRelativa(r.fecha!) }}
-            </span>
-
-        </div>
-        <p class="comentario">
-            {{ r.comentario }}
-        </p>
+  <!-- Participante -->
+  <div class="resena-field">
+    <label class="resena-label">
+      <i class="bi bi-person"></i>
+      Participante al que pertenece la reseña
+    </label>
+    <div class="resena-value">
+      {{ r.participante?.nombres }} {{ r.participante?.apellidos }}
     </div>
+  </div>
+
+  <!-- Fecha -->
+  <div class="resena-field">
+    <label class="resena-label">
+      <i class="bi bi-clock-history"></i>
+      Fecha emitida de la reseña
+    </label>
+    <div class="resena-value">
+      {{ getFechaRelativa(r.fecha!) }}
+    </div>
+  </div>
+
+  <!-- Rating -->
+  <div class="resena-field">
+    <label class="resena-label">
+      <i class="bi bi-star"></i>
+      Calificación
+    </label>
+    <div class="rating" *ngIf="r.rating">
+      <span class="star" *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= r.rating">
+        ★
+      </span>
+    </div>
+  </div>
+
+  <!-- Reseña -->
+  <div class="resena-field">
+    <label class="resena-label">
+      <i class="bi bi-chat-text"></i>
+      Reseña
+    </label>
+    <p class="comentario">
+      {{ r.comentario }}
+    </p>
+  </div>
 
 </div>
