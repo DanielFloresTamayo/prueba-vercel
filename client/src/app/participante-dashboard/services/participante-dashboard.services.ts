@@ -73,7 +73,7 @@ export class ParticipanteDashboardService {
   getCitasByClase(claseId: number): Observable<Cita[]> {
     return this.http.get<Cita[]>(`${this.apiUrlCitas}?claseId=${claseId}`);
   }
-  
+  //traer toda la cita con el participante, tutor y clase
   getCitasByParticipante(participanteId: number) {
     return this.http.get<any[]>(`${this.apiUrlCitas}?participanteId=${participanteId}&_expand=tutor&_expand=clase`);
   }
@@ -85,11 +85,49 @@ export class ParticipanteDashboardService {
   cancelarCita(idCita: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlCitas}/${idCita}`);
   }
-  
+  //  Marcar cita como reseñada
   updateCitaTieneResena(citaId: number): Observable<Cita> {
     return this.http.patch<Cita>(`${this.apiUrlCitas}/${citaId}`, {
       tieneResena: true
     });
   }
+
+  crearCitaConValidacion(cita: Cita): Observable<Cita> {
+
+  const ESTADOS_ACTIVOS = ['pendiente', 'aceptada'];
+  const MAX_CITAS_ACTIVAS = 3;
+
+  return this.getCitasByParticipante(cita.participanteId).pipe(
+    map((citas) => {
+
+  const activas = citas.filter(c =>
+    ESTADOS_ACTIVOS.includes(c.estado)
+  );
+
+  
+  if (activas.length >= MAX_CITAS_ACTIVAS) {
+    throw new Error(
+      `Has alcanzado el límite de ${MAX_CITAS_ACTIVAS} citas. Completa una para poder agendar otra.`
+    );
+  }
+
+  
+  const citaDuplicada = activas.some(c =>
+    c.claseId === cita.claseId
+  );
+
+  if (citaDuplicada) {
+    throw new Error(
+      'Ya tienes una cita para esta clase.'
+    );
+  }
+
+  return true;
+}),
+
+    switchMap(() => this.crearCita(cita))
+  );
+}
+
   
 }

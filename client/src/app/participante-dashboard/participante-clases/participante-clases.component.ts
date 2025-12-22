@@ -25,7 +25,7 @@ export class ParticipanteClasesComponent implements OnInit {
   clases: Clase[] = [];
   loading = true;
   mensaje: string | null = null;
-
+ 
   participanteId = Number(localStorage.getItem('userId'));
 
   constructor(private participanteService: ParticipanteDashboardService) { }
@@ -55,15 +55,22 @@ export class ParticipanteClasesComponent implements OnInit {
     return `Publicado hace ${diffDias} días`;
   }
 
-
   ngOnInit(): void {
+
+    const usuarioData = JSON.parse(localStorage.getItem('usuario')!);
+    this.participanteId = usuarioData?.id;
+
     this.participanteService.getClasesConTutor().subscribe({
       next: (data) => {
-        this.clases = data;
+        this.clases = data.sort((a, b) =>
+          new Date(b.fechaPublicacion).getTime() -
+          new Date(a.fechaPublicacion).getTime()
+        );
+        
         this.loading = false;
       },
       error: () => {
-        console.error("Error cargando clases.");
+        
         this.loading = false;
       }
     });
@@ -81,18 +88,18 @@ export class ParticipanteClasesComponent implements OnInit {
       claseId: clase.id!,
       fechaSolicitud: new Date().toISOString(),
       estado: 'pendiente',
-      mensaje: '',   // opcional
+      mensaje: '',  // opcional
       tieneResena: false
     };
 
-    this.participanteService.crearCita(nuevaCita).subscribe({
+    this.participanteService.crearCitaConValidacion(nuevaCita).subscribe({
+
       next: () => {
         Swal.fire({
           icon: 'success',
           html: `
     <b>Cita registrada.</b><br>
-    Contacta al tutor con los datos de la clase para coordinar la hora, precios.
-  `,
+    Contacta al tutor con los datos de la clase para coordinar la hora, precios.`,
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
@@ -101,14 +108,15 @@ export class ParticipanteClasesComponent implements OnInit {
         });
 
       },
-      error: () => {
+      error: (err) => {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se pudo registrar la cita.',
-          confirmButtonColor: '#d33'
+          icon: 'warning',
+          title: 'Límite alcanzado',
+          text: err.message || 'No puedes crear más citas.',
+          confirmButtonColor: '#3085d6'
         });
       }
+
     });
 
   }
