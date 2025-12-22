@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Clase } from '../../models/clase.model';
 import { Resena } from '../../models/resena.model'; // suponiendo que tienes un modelo de reseñas
 import { Cita } from '../../models/cita.model';
+import { throwError } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 
 
 
