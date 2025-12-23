@@ -12,7 +12,8 @@ export const routes: Routes = [
   { path: 'registro-participante', component: RegistroParticipanteComponent },
   { path: 'registro-tutor', component: RegistroTutorComponent },
   { path: 'login', loadComponent: () => import('./login/login.component').then(m => m.LoginComponent) },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
+  {path: '',component: HomeComponent},
 
   {
     path: 'tutor',
