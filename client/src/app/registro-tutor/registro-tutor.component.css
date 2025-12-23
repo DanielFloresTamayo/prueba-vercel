@@ -1,5 +1,5 @@
 .background-container {
-  background: linear-gradient(135deg, #f1c40f, #2ecc71);
+  background: url('../../../src/assets/imagenes/10.jpg') center / cover no-repeat fixed;
   min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
