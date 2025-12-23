@@ -7,6 +7,7 @@ import { Participante } from '../models/participante.model';
 import { RegistroParticipanteService } from './registro-participante.service';
 import * as bcrypt from 'bcryptjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -14,7 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-registro-participante',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule],
+  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule,RouterModule],
   templateUrl: './registro-participante.component.html',
   styleUrls: ['./registro-participante.component.css']
 })
