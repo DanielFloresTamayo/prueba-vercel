@@ -1,3 +1,6 @@
+/* =========================
+   BACKGROUND
+========================= */
 .background-container {
   background: url('../../../src/assets/imagenes/10.jpg') center / cover no-repeat fixed;
   min-height: 100vh;
@@ -5,30 +8,33 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  /*animation: fadeInBackground 1s ease-in-out;*/
+  position: relative;
 }
 
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
 .registro-container {
-  width: 80%;
-  margin: 40px auto;
+  width: 65%;
+  margin: 60px auto;
   padding: 20px;
   border-radius: 16px;
   backdrop-filter: blur(10px);
-  /*animation: fadeInUp 1.2s ease-in-out;
-   background-color: rgba(255, 255, 255, 0.477);,
-   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);*/
-  /* <- Animación de entrada más lenta */
-  
 }
 
+/* =========================
+   TITULOS
+========================= */
 h2 {
   text-align: center;
   color: #333;
   font-weight: 700;
   letter-spacing: 0.5px;
-
 }
 
+/* =========================
+   FORMULARIO
+========================= */
 .form-group {
   margin-bottom: 15px;
 }
@@ -45,7 +51,7 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input:focus {
@@ -54,6 +60,24 @@ input:focus {
   outline: none;
 }
 
+.is-invalid {
+  border-color: red;
+}
+
+.text-danger,
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.error-message strong {
+  font-weight: bold;
+}
+
+/* =========================
+   BOTONES
+========================= */
 button {
   width: 100%;
   padding: 10px;
@@ -62,7 +86,8 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 button:hover:not(:disabled) {
@@ -76,25 +101,36 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.is-invalid {
-  border-color: red;
-}
-
-.text-danger {
-  color: red;
-}
-
-
 button i {
   font-size: 16px;
 }
 
+/* Angular Material */
+button[mat-raised-button] {
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+/* Bootstrap outline */
+.btn-outline-danger {
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* =========================
+   SPINNER / LOADING
+========================= */
 .spinner-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   backdrop-filter: blur(6px);
   background-color: rgba(0, 0, 0, 0.45);
   display: flex;
@@ -104,13 +140,12 @@ button i {
   z-index: 2000;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.6s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .spinner-overlay.fade-in {
   opacity: 1;
   pointer-events: all;
-
 }
 
 .custom-spinner {
@@ -124,11 +159,7 @@ button i {
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
@@ -142,30 +173,13 @@ button i {
 }
 
 @keyframes fadeText {
-  from {
-    opacity: 0.6;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0.6; }
+  to { opacity: 1; }
 }
 
-
-
-button[mat-raised-button] {
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.alert {
-  border-radius: 10px;
-   font-size: 0.9rem;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
+/* =========================
+   GLASS CARD (Apple-style)
+========================= */
 .glass-card {
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.45);
@@ -180,7 +194,6 @@ button[mat-raised-button] {
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
 }
 
-/* Efecto de aparición Apple UI */
 @keyframes appleFadeIn {
   0% {
     opacity: 0;
@@ -199,6 +212,29 @@ button[mat-raised-button] {
   }
 }
 
+/* =========================
+   LOGOUT BUTTON
+========================= */
+.logout-btn-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.logout-btn-container button {
+  border-radius: 30px;
+  padding: 6px 14px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logout-btn-container button:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 768px) {
   .background-container {
     flex-direction: column;
@@ -211,8 +247,22 @@ button[mat-raised-button] {
     margin: 10px 0;
   }
 
+  .registro-container > div,
   form {
     width: 100%;
   }
 }
 
+@media (max-width: 768px) {
+  .logout-btn-container {
+    position: static;
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logout-btn-container button {
+    width: auto;
+  }
+}

@@ -1,26 +1,30 @@
+/* =========================
+   BACKGROUND
+========================= */
 .background-container {
-   background: url('../../../src/assets/imagenes/10.jpg') center / cover no-repeat fixed;
+  background: url('../../../src/assets/imagenes/10.jpg') center / cover no-repeat fixed;
   min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  /* animation: fadeInBackground 1s ease-in-out;*/
+  position: relative;
 }
 
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
 .registro-container {
-  width: 80%;
-  margin: 20px auto;
+  width: 65%;
+  margin: 60px auto;
   padding: 20px;
   border-radius: 16px;
   backdrop-filter: blur(10px);
-  /*background-color: rgba(255, 255, 255, 0.477);*/
-  /*animation: fadeInUp 1.2s ease-in-out;*/
-
-  /*border: 1px solid #ccc;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);*/
 }
 
+/* =========================
+   TITULOS
+========================= */
 h2 {
   text-align: center;
   color: #333;
@@ -28,6 +32,9 @@ h2 {
   letter-spacing: 0.5px;
 }
 
+/* =========================
+   FORMULARIO
+========================= */
 .form-group {
   margin-bottom: 15px;
 }
@@ -44,42 +51,86 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover:not(:disabled) {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #d6d6d6;
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
 }
 
 .is-invalid {
   border-color: red;
 }
 
-.text-danger {
+.text-danger,
+.error-message {
   color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
+.error-message strong {
+  font-weight: bold;
+}
+
+/* =========================
+   BOTONES
+========================= */
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 91, 187, 0.4);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background-color: #d6d6d6;
+  cursor: not-allowed;
+}
+
+button i {
+  font-size: 16px;
+}
+
+/* Angular Material */
+button[mat-raised-button] {
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+/* Bootstrap outline */
+.btn-outline-danger {
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* =========================
+   SPINNER / LOADING
+========================= */
 .spinner-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   backdrop-filter: blur(6px);
   background-color: rgba(0, 0, 0, 0.45);
   display: flex;
@@ -89,7 +140,7 @@ button:disabled {
   z-index: 2000;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .spinner-overlay.fade-in {
@@ -108,11 +159,7 @@ button:disabled {
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
@@ -135,45 +182,9 @@ button:disabled {
   }
 }
 
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.error-message strong {
-  font-weight: bold;
-}
-
-.btn-outline-danger {
-  border-radius: 20px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.btn-outline-danger:hover {
-  background-color: #dc3545;
-  color: white;
-  transform: scale(1.05);
-}
-
-.logout-btn-container {
-  position: absolute;
-  top: 20px;
-  right: 125px;
-}
-
-.logout-btn-container button {
-  border-radius: 30px;
-  padding: 6px 14px;
-  /*font-size: 0.9rem;*/
-  transition: all 0.2s ease-in-out;
-}
-
-.logout-btn-container button:hover {
-  transform: scale(1.05);
-}
-
+/* =========================
+   GLASS CARD (Apple-style)
+========================= */
 .glass-card {
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.45);
@@ -187,7 +198,6 @@ button:disabled {
   transform: translateY(-3px);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
 }
-
 
 @keyframes appleFadeIn {
   0% {
@@ -209,20 +219,52 @@ button:disabled {
   }
 }
 
+/* =========================
+   LOGOUT BUTTON
+========================= */
+.logout-btn-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.logout-btn-container button {
+  border-radius: 30px;
+  padding: 6px 14px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logout-btn-container button:hover {
+  transform: scale(1.05);
+}
+
 @media (max-width: 768px) {
   .background-container {
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     text-align: center;
   }
 
-  .registro-container > div {
-    width: 100%; 
-    margin-bottom: 1rem; 
+  .registro-container {
+    width: 95%;
     margin: 10px 0;
   }
 
+  .registro-container>div,
   form {
-    width: 100%; 
+    width: 100%;
+  }
+
+  .logout-btn-container {
+    position: static;
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logout-btn-container button {
+    width: auto;
   }
 }
