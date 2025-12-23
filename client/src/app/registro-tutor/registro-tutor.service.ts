@@ -9,7 +9,7 @@ import { Tutor } from '../models/tutor.model';
   providedIn: 'root',
 })
 export class RegistroTutorService {
-  private apiUrl = `${environment.apiUrl}/tutores`;
+  private apiUrl = `${environment.apiUrl}/tutors`;
 
   constructor(private http: HttpClient) { }
 
