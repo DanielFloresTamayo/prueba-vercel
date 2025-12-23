@@ -4,7 +4,7 @@ import { RegistroTutorComponent } from './registro-tutor/registro-tutor.componen
 import { TUTOR_DASHBOARD_ROUTES } from './tutor-dashboard/tutor-dashboard-routing';
 import { AuthGuard } from './guards/auth.guard';
 import { PARTICIPANTE_DASHBOARD_ROUTES } from './participante-dashboard/participante-dashboard-routing';
-
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
 
