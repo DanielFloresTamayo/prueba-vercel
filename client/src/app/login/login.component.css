@@ -60,13 +60,16 @@ input.form-control:focus {
   transform: scale(1.03);
 }
 
-/* Botón del ojo */
 .toggle-btn {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  background-color: #21272c;
 }
 
-/* Alertas */
+.toggle-btn:hover {
+  background-color: #5a6268;
+}
+
 .alert {
   border-radius: 10px;
   animation: fadeIn 0.4s ease;
@@ -104,7 +107,7 @@ input.form-control:focus {
   }
 }
 
-/* Contenedor para aplicar transición fluida */
+
 .fade-wrapper {
   /*display: flex;*/
   justify-content: center;
@@ -125,7 +128,7 @@ input.form-control:focus {
 }
 
 .login-wrapper {
-  background: linear-gradient(135deg, #ffb300, #63ff9a);
+  background: url('../../../src/assets/imagenes/11.jpg') center / cover no-repeat fixed;
   backdrop-filter: blur(8px);
  /* animation: gradientFade 1s ease forwards;*/
 }
