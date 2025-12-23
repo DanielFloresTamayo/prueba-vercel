@@ -1,5 +1,5 @@
 .background-container {
-  background: linear-gradient(135deg, #f1c40f, #2ecc71);
+   background: url('../../../src/assets/imagenes/10.jpg') center / cover no-repeat fixed;
   min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
@@ -188,7 +188,7 @@ button:disabled {
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
 }
 
-/* Efecto de aparición Apple UI */
+
 @keyframes appleFadeIn {
   0% {
     opacity: 0;
@@ -208,21 +208,21 @@ button:disabled {
     filter: blur(0) brightness(1);
   }
 }
-/* 🧠 Hace que las columnas se apilen en pantallas pequeñas */
+
 @media (max-width: 768px) {
   .background-container {
     flex-direction: column;
-    align-items: center; /* centra el contenido verticalmente */
+    align-items: center; 
     text-align: center;
   }
 
   .registro-container > div {
-    width: 100%; /* cada bloque ocupa todo el ancho */
-    margin-bottom: 1rem; /* separa las secciones */
+    width: 100%; 
+    margin-bottom: 1rem; 
     margin: 10px 0;
   }
 
   form {
-    width: 100%; /* evita que el formulario se vea demasiado ancho */
+    width: 100%; 
   }
 }
