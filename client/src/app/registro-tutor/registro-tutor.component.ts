@@ -8,12 +8,13 @@ import { RegistroTutorService } from './registro-tutor.service';
 import * as bcrypt from 'bcryptjs';
 import { Tutor } from '../models/tutor.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-registro-tutor',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule],
+  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule,RouterModule],
   templateUrl: './registro-tutor.component.html',
   styleUrl: './registro-tutor.component.css'
 })
@@ -45,7 +46,7 @@ export class RegistroTutorComponent {
 
     if (tutorForm.valid) {
       this.isLoading = true;
-      // 🔍 Verificamos si el correo ya está registrado
+      
       this.registroTutorService.obtenerTutores().subscribe({
         next: (tutores) => {
           const correoExiste = tutores.some(
@@ -79,20 +80,20 @@ export class RegistroTutorComponent {
           // Registramos al tutor usando el servicio
           this.registroTutorService.registrarTutor(nuevoTutor).subscribe({
             next: (response) => {
-              console.log('Tutor registrado exitosamente:', response);
+              
               this.resetForm(tutorForm);
               alert('✅ Registro completado exitosamente.');
               this.isLoading = false;
             },
             error: (error) => {
-              console.error('Error al registrar tutor:', error);
+              
               alert('❌ Ocurrió un error al registrar el tutor.');
               this.isLoading = false;
             },
           });
         },
         error: (err) => {
-          console.error('Error al verificar correos:', err);
+          
           alert('❌ Error al verificar correos existentes.');
           this.isLoading = false;
           
