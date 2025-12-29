@@ -6,6 +6,7 @@
         </button>
     </div>
 
+
   <div class="registro-container glass-card">
     <h2 class="mb-4 text-center">Registro de Tutor</h2>
 
@@ -14,9 +15,9 @@
       <div class="form-group mb-3">
         <label for="email">Correo Institucional</label>
         <input type="email" id="email" name="email" class="form-control" [(ngModel)]="tutor.correo" #email="ngModel"
-          [ngClass]="{'is-invalid': email.invalid && email.touched}" required pattern="[a-zA-Z0-9._%+-]+@epn\.edu\.ec"
+          placeholder="Ingresa tu correo institucional" [ngClass]="{'is-invalid': email.invalid && email.touched}" required pattern="[a-zA-Z0-9._%+-]+@epn\.edu\.ec"
           minlength="8" maxlength="30" />
-        <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
+        <div *ngIf="email.invalid && email.touched" class="error-message">
           El correo debe ser válido y con el dominio epn.edu.ec.
         </div>
       </div>
@@ -28,7 +29,7 @@
           placeholder="Ingresa tus nombres completos" [(ngModel)]="tutor.nombre" #firstName="ngModel"
           [ngClass]="{'is-invalid': firstName.invalid && firstName.touched}" required minlength="10" maxlength="30"
           pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
-        <div *ngIf="firstName.invalid && firstName.touched" class="text-danger small mt-1">
+        <div *ngIf="firstName.invalid && firstName.touched" class="error-message">
           Los nombres deben tener al menos 10 caracteres, no debe contener números.
         </div>
       </div>
@@ -40,7 +41,7 @@
           placeholder="Ingresa tus apellidos completos" [(ngModel)]="tutor.apellido" #lastName="ngModel"
           [ngClass]="{'is-invalid': lastName.invalid && lastName.touched}" required minlength="10" maxlength="50"
           pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
-        <div *ngIf="lastName.invalid && lastName.touched" class="text-danger small mt-1">
+        <div *ngIf="lastName.invalid && lastName.touched" class="error-message">
           Los apellidos deben tener mínimo 10 caracteres, no debe contener números o caracteres sueltos.
         </div>
       </div>
@@ -52,7 +53,7 @@
           placeholder="Ingresa tu nivel académico-semestre" [(ngModel)]="tutor.nivel_academico" #academicLevel="ngModel"
           [ngClass]="{'is-invalid': academicLevel.invalid && academicLevel.touched}" required minlength="10"
           maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" />
-        <div *ngIf="academicLevel.invalid && academicLevel.touched" class="text-danger small mt-1">
+        <div *ngIf="academicLevel.invalid && academicLevel.touched" class="error-message">
           El nivel académico debe tener mínimo 10 caracteres, no debe contener números o caracteres sueltos.
         </div>
       </div>
@@ -78,7 +79,7 @@
             </button>
           </div>
         </div>
-        <div *ngIf="password.invalid && password.touched" class="text-danger small mt-1">
+        <div *ngIf="password.invalid && password.touched" class="error-message" >
           La contraseña debe tener mínimo 8 caractéres, incluir al menos una letra mayúscula, un número y un carácter
           especial.
         </div>
@@ -91,25 +92,20 @@
 
       <!-- Botón -->
       <div class="d-flex justify-content-center mt-4">
-        <button type="submit" mat-raised-button color="primary"
-          class="w-100 d-flex justify-content-center align-items-center" [disabled]="isLoading || tutorForm.invalid">
+        <button type="submit"        
+        mat-raised-button 
+        [class.loading]="isLoading"
+        color="primary"
+        class="w-100 d-flex justify-content-center align-items-center"
+        [disabled]="isLoading || tutorForm.invalid">
 
           <ng-container *ngIf="!isLoading">
             <i class="fas fa-user-plus me-2"></i> Registrar
           </ng-container>
-          <!-- Botón 
-        <ng-container *ngIf="isLoading">
-          <mat-spinner diameter="20" color="accent"></mat-spinner>
-          <span class="ms-2">Registrando...</span>
-        </ng-container>-->
         </button>
       </div>
-
-
     </form>
-    <!-- Overlay del spinner global -->
-
-  </div>
+   </div>
   <div *ngIf="isLoading" class="spinner-overlay fade-in">
     <div class="custom-spinner"></div>
     <p>Cargando registro, por favor espere...</p>
