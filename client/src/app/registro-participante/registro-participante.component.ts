@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-registro-participante',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule,RouterModule],
+  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './registro-participante.component.html',
   styleUrls: ['./registro-participante.component.css']
 })
@@ -77,12 +77,12 @@ export class RegistroParticipanteComponent {
           this.registroService.registrarParticipante(nuevoParticipante).subscribe({
             next: (response) => {
               this.isLoading = false;
-              console.log('Participante registrado:', response);
+              
               alert('Registro completado con éxito.');
               this.resetForm(form);
             },
             error: (error) => {
-              console.error('Error en el registro:', error);
+              
               this.isLoading = false;
               alert('Ocurrió un error al registrar el participante.');
             }
@@ -90,7 +90,7 @@ export class RegistroParticipanteComponent {
         },
 
         error: (error) => {
-          console.error('Error al verificar participantes:', error);
+          
           this.isLoading = false;
           alert('❌ Error al verificar correos existentes.');
         }
