@@ -17,7 +17,7 @@
                     [ngClass]="{'is-invalid': correoInput.invalid && correoInput.touched}" required
                     pattern="^[a-zA-Z0-9._%+-]+@((gmail|hotmail|yahoo)\.com|([a-zA-Z0-9._-]+\.)?)$" required
                     minlength="13" maxlength="35" placeholder="Ingresa tu correo" />
-                <div *ngIf="correoInput.invalid && correoInput.touched" class="text-danger small mt-1">
+                <div *ngIf="correoInput.invalid && correoInput.touched" class="error-message">
                     Ingresa un correo válido con los dominios: gmail.com, hotmail.com o yahoo.com. Al menos
                     13 caracteres.
                 </div>
@@ -29,7 +29,7 @@
                     #nombresInput="ngModel" [ngClass]="{'is-invalid': nombresInput.invalid && nombresInput.touched}"
                     pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required minlength="10" maxlength="30"
                     placeholder="Ingresa tus nombres" />
-                <div *ngIf="nombresInput.invalid && nombresInput.touched" class="text-danger small mt-1">
+                <div *ngIf="nombresInput.invalid && nombresInput.touched" class="error-message">
                     Los nombres deben tener al menos 10 caracteres, no debe contener números o caracteres especiales.
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     [ngClass]="{'is-invalid': apellidosInput.invalid && apellidosInput.touched}"
                     pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required minlength="10" maxlength="30"
                     placeholder="Ingresa tus apellidos" />
-                <div *ngIf="apellidosInput.invalid && apellidosInput.touched" class="text-danger small mt-1">
+                <div *ngIf="apellidosInput.invalid && apellidosInput.touched" class="error-message">
                     Los apellidos deben tener al menos 10 caracteres, no debe contener números o caracteres especiales.
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     Todos los campos deben ser completados correctamente.
                 </div>-->
                 </div>
-                <div *ngIf="contrasenaInput.invalid && contrasenaInput.touched" class="text-danger small mt-1">
+                <div *ngIf="contrasenaInput.invalid && contrasenaInput.touched" class="error-message">
                     La contraseña debe tener entre 8 y 12 caracteres.
                 </div>
             </div>
@@ -79,7 +79,9 @@
             <div class="d-flex justify-content-center mt-4">
                 <button type="submit" mat-raised-button color="primary"
                     class="w-100 d-flex justify-content-center align-items-center"
-                    [disabled]="isLoading || registroForm.invalid">
+                    [disabled]="isLoading || registroForm.invalid" mat-raised-button
+                    [class.loading]="isLoading"
+                    >
 
                     <ng-container *ngIf="!isLoading">
                         <i class="fas fa-user-plus me-2"></i> Registrar
