@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,AfterViewInit  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +18,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './registro-tutor.component.html',
   styleUrl: './registro-tutor.component.css'
 })
-export class RegistroTutorComponent {
+export class RegistroTutorComponent implements AfterViewInit {
   tutor = {
     correo: '',
     nombre: '',
@@ -26,14 +26,22 @@ export class RegistroTutorComponent {
     nivel_academico: '',
     fecha_nacimiento: '',
     password: '',
+    
 
   };
   showPassword = false;
   correoDuplicado = false;
   formSubmitted = false;
   isLoading = false;
+  runAnim = false;
+
 
   constructor(private registroTutorService: RegistroTutorService) { }
+
+  ngAfterViewInit(): void {
+  requestAnimationFrame(() => this.runAnim = true);
+}
+
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;

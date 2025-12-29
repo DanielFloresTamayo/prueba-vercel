@@ -7,7 +7,7 @@
     </div>
 
 
-  <div class="registro-container glass-card">
+  <div class="registro-container glass-card animate-init" [class.animate-run]="runAnim">
     <h2 class="mb-4 text-center">Registro de Tutor</h2>
 
     <form (ngSubmit)="registerTutor(tutorForm)" #tutorForm="ngForm" class="p-4 border rounded bg-light">
