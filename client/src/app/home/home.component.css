@@ -1,17 +1,36 @@
 .home {
-    margin: 0;
-    min-height: 100vh;
-    width: 100%;
-    padding: 24px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 80px;
-
-    background: url('../../../src/assets/imagenes/10.jpg') center / cover no-repeat fixed;
-
-    color: #181616;
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  color: #181616;
 }
+
+.home-wrapper {
+  min-height: 100vh;
+  background-image: url('../../../src/assets/imagenes/9.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.home-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(0px); /* opcional */
+  z-index: 0;
+}
+
+.home-container {
+  position: relative;
+  z-index: 1;
+}
+
 
 /* ---------- NAVBAR ---------- */
 .public-navbar {

@@ -1,107 +1,111 @@
-<div class="home">
+<div class="home-wrapper">
+    <div class="home-container">
+        <div class="home">
 
-    <nav class="public-navbar">
-        <div class="logo">Tutorías</div>
+            <nav class="public-navbar">
+                <div class="logo">Tutorías</div>
 
-        <ul class="nav-links">
-            <li routerLink="/">Inicio</li>
-            <li>Tutores</li>
-            <li (click)="scrollTo('how-it-works')">¿Cómo funciona?</li>
-        </ul>
-
-        <div class="nav-actions">
-            <button class="secondary" routerLink="/login">Ingresar</button>
-            
-        </div>
-    </nav>
-
-
-    <!-- HERO -->
-    <section class="hero">
-        <h1>Aprende con tutores verificados</h1>
-        <p>Clases personalizadas, agenda flexible y reseñas reales.</p>
-
-        <div class="hero-actions">
-             <button class="primary" routerLink="/registro-participante">Soy participante</button>
-            <button class="secondary" routerLink="/registro-tutor">Soy tutor</button>
-        </div>
-    </section>
-
-    <!-- CÓMO FUNCIONA -->
-    <section class="how-it-works" id="how-it-works">
-        <h2>¿Cómo funciona?</h2>
-
-        <div class="steps">
-            <div class="step">
-                <span>1</span>
-                <p>Regístrate como tutor o participante</p>
-            </div>
-            <div class="step">
-                <span>2</span>
-                <p>Explora clases publicadas por tutores y según su perfil</p>
-            </div>
-
-            <div class="step">
-                <span>3</span>
-                <p>Solicita una cita sin pagos previos</p>
-            </div>
-
-            <div class="step">
-                <span>4</span>
-                <p>Aprende y califica tu experiencia al finalizar</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- TUTORES DESTACADOS -->
-    <section class="featured-tutors">
-        <h2>Tutores mejor valorados</h2>
-
-        <div class="tutor-cards">
-            <!-- cards luego -->
-        </div>
-    </section>
-
-    <!-- BENEFICIOS -->
-    <section class="benefits">
-        <h2>¿Por qué usar la plataforma?</h2>
-
-        <div class="benefits-grid">
-            <div>
-                <h3>Participantes</h3>
-                <ul>
-                    <li>Encuentra tutores verificados</li>
-                    <li>Reseñas reales</li>
-                    <li>Agenda clases acorde a tus necesidades</li>
-                    <li>Sin compromisos</li>
+                <ul class="nav-links">
+                    <li routerLink="/">Inicio</li>
+                    <li>Tutores</li>
+                    <li (click)="scrollTo('how-it-works')">¿Cómo funciona?</li>
                 </ul>
-            </div>
 
-            <div>
-                <h3>Tutores</h3>
-                <ul>
-                    <li>Publica tus clases</li>
-                    <li>Mayor visibilidad</li>
-                    <li>Gestión de citas</li>
-                    <li>Construye reputación con reseñas</li>
-                </ul>
-            </div>
+                <div class="nav-actions">
+                    <button class="secondary" routerLink="/login">Ingresar</button>
+
+                </div>
+            </nav>
+
+
+            <!-- HERO -->
+            <section class="hero">
+                <h1>Aprende con tutores verificados</h1>
+                <p>Clases personalizadas, agenda flexible y reseñas reales.</p>
+
+                <div class="hero-actions">
+                    <button class="primary" routerLink="/registro-participante">Soy participante</button>
+                    <button class="secondary" routerLink="/registro-tutor">Soy tutor</button>
+                </div>
+            </section>
+
+            <!-- CÓMO FUNCIONA -->
+            <section class="how-it-works" id="how-it-works">
+                <h2>¿Cómo funciona?</h2>
+
+                <div class="steps">
+                    <div class="step">
+                        <span>1</span>
+                        <p>Regístrate como tutor o participante</p>
+                    </div>
+                    <div class="step">
+                        <span>2</span>
+                        <p>Explora clases publicadas por tutores y según su perfil</p>
+                    </div>
+
+                    <div class="step">
+                        <span>3</span>
+                        <p>Solicita una cita sin pagos previos</p>
+                    </div>
+
+                    <div class="step">
+                        <span>4</span>
+                        <p>Aprende y califica tu experiencia al finalizar</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TUTORES DESTACADOS -->
+            <section class="featured-tutors">
+                <h2>Tutores mejor valorados</h2>
+
+                <div class="tutor-cards">
+                    <!-- cards luego -->
+                </div>
+            </section>
+
+            <!-- BENEFICIOS -->
+            <section class="benefits">
+                <h2>¿Por qué usar la plataforma?</h2>
+
+                <div class="benefits-grid">
+                    <div>
+                        <h3>Participantes</h3>
+                        <ul>
+                            <li>Encuentra tutores verificados</li>
+                            <li>Reseñas reales</li>
+                            <li>Agenda clases acorde a tus necesidades</li>
+                            <li>Sin compromisos</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>Tutores</h3>
+                        <ul>
+                            <li>Publica tus clases</li>
+                            <li>Mayor visibilidad</li>
+                            <li>Gestión de citas</li>
+                            <li>Construye reputación con reseñas</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA FINAL -->
+            <section class="cta">
+                <h2>¿Aún no tienes una cuenta? </h2>
+                <p>Regístrate gratis y conecta con tutores o participantes.</p>
+
+                <div class="cta-actions">
+                    <button class="primary" routerLink="/registro-participante">Crear cuenta como participante</button>
+                    <button class="secondary" routerLink="/registro-tutor">Crear cuenta como tutor</button>
+                </div>
+            </section>
+
+            <footer class="public-footer">
+                <p>© 2025 Plataforma de Tutorías. Todos los derechos reservados.</p>
+            </footer>
+
         </div>
-    </section>
-
-    <!-- CTA FINAL -->
-    <section class="cta">
-        <h2>¿Aún no tienes una cuenta? </h2>
-        <p>Regístrate gratis y conecta con tutores o participantes.</p>
-
-        <div class="cta-actions">
-            <button class="primary" routerLink="/registro-participante">Crear cuenta como participante</button>
-            <button class="secondary" routerLink="/registro-tutor">Crear cuenta como tutor</button>
-        </div>
-    </section>
-
-    <footer class="public-footer">
-        <p>© 2025 Plataforma de Tutorías. Todos los derechos reservados.</p>
-    </footer>
-
+    </div>
 </div>
