@@ -1,4 +1,4 @@
-import { Component,ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +19,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './registro-participante.component.html',
   styleUrls: ['./registro-participante.component.css']
 })
-export class RegistroParticipanteComponent {
+export class RegistroParticipanteComponent implements OnInit {
   correoPersonal: string = '';
   nombres: string = '';
   apellidos: string = '';
@@ -28,11 +28,13 @@ export class RegistroParticipanteComponent {
   correoDuplicado = false;
   formSubmitted = false;
   isLoading = false;
+  runAnim = false;
 
-  constructor(
-    private registroService: RegistroParticipanteService,
-    private cd: ChangeDetectorRef
-  ) { }
+  constructor(private registroService: RegistroParticipanteService, private cd: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+    queueMicrotask(() => this.runAnim = true);
+  }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
@@ -47,7 +49,7 @@ export class RegistroParticipanteComponent {
     if (form.valid) {
       this.isLoading = true;
       this.cd.detectChanges();
-      
+
 
       // Primero verificamos si existe el correo
       this.registroService.obtenerParticipantes().subscribe({
@@ -77,12 +79,12 @@ export class RegistroParticipanteComponent {
           this.registroService.registrarParticipante(nuevoParticipante).subscribe({
             next: (response) => {
               this.isLoading = false;
-              
+
               alert('Registro completado con éxito.');
               this.resetForm(form);
             },
             error: (error) => {
-              
+
               this.isLoading = false;
               alert('Ocurrió un error al registrar el participante.');
             }
@@ -90,7 +92,7 @@ export class RegistroParticipanteComponent {
         },
 
         error: (error) => {
-          
+
           this.isLoading = false;
           alert('❌ Error al verificar correos existentes.');
         }

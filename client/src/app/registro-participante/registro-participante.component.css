@@ -267,3 +267,16 @@ button[mat-raised-button].loading::after {
   .registro-container { width: 95%; margin: 10px 0; }
   .logout-btn-container { position: static; margin-bottom: 15px; }
 }
+
+.animate-init {
+  opacity: 0;
+  transform: translateY(30px) scale(.96);
+  filter: blur(12px);
+}
+
+.animate-run {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  transition: 1.15s cubic-bezier(.22,.61,.36,1);
+}
