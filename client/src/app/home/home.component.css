@@ -264,3 +264,17 @@ button.secondary:hover {
         flex-direction: column;
     }
 }
+
+/* ===== ENTRADA HOME ===== */
+.home {
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
+  filter: blur(14px);
+}
+
+.home.run {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  transition: 1.15s cubic-bezier(.22,.61,.36,1);
+}
