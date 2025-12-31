@@ -1,4 +1,4 @@
-import { Component,AfterViewInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,11 +14,11 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-registro-tutor',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule,RouterModule],
+  imports: [MatButtonModule, MatTableModule, CommonModule, FormsModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './registro-tutor.component.html',
   styleUrl: './registro-tutor.component.css'
 })
-export class RegistroTutorComponent implements AfterViewInit {
+export class RegistroTutorComponent implements OnInit {
   tutor = {
     correo: '',
     nombre: '',
@@ -26,7 +26,7 @@ export class RegistroTutorComponent implements AfterViewInit {
     nivel_academico: '',
     fecha_nacimiento: '',
     password: '',
-    
+
 
   };
   showPassword = false;
@@ -38,10 +38,9 @@ export class RegistroTutorComponent implements AfterViewInit {
 
   constructor(private registroTutorService: RegistroTutorService) { }
 
-  ngAfterViewInit(): void {
-  requestAnimationFrame(() => this.runAnim = true);
-}
-
+  ngOnInit(): void {
+    queueMicrotask(() => this.runAnim = true);
+  }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
@@ -54,7 +53,7 @@ export class RegistroTutorComponent implements AfterViewInit {
 
     if (tutorForm.valid) {
       this.isLoading = true;
-      
+
       this.registroTutorService.obtenerTutores().subscribe({
         next: (tutores) => {
           const correoExiste = tutores.some(
@@ -88,23 +87,23 @@ export class RegistroTutorComponent implements AfterViewInit {
           // Registramos al tutor usando el servicio
           this.registroTutorService.registrarTutor(nuevoTutor).subscribe({
             next: (response) => {
-              
+
               this.resetForm(tutorForm);
               alert('✅ Registro completado exitosamente.');
               this.isLoading = false;
             },
             error: (error) => {
-              
+
               alert('❌ Ocurrió un error al registrar el tutor.');
               this.isLoading = false;
             },
           });
         },
         error: (err) => {
-          
+
           alert('❌ Error al verificar correos existentes.');
           this.isLoading = false;
-          
+
         },
       });
     } else {
