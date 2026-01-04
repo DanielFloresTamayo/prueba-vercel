@@ -9,7 +9,7 @@ import { FeaturedTutor } from '../../models/featured-tutor.dto';
 @Injectable({ providedIn: 'root' })
 export class HomeService {
 
-    private api = 'http://localhost:3000';
+    private api = 'https://grateful-essence-production-2233.up.railway.app';
 
     constructor(private http: HttpClient) { }
 
