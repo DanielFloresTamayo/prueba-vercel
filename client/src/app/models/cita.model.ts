@@ -12,10 +12,8 @@ export interface Cita {
   estado: 'pendiente' | 'completada'| 'rechazada'|'aceptada'; // estado de la cita
   mensaje?: string;    
   tieneResena: boolean;
-
+  
   tutor?: Tutor;
   participante?: Participante;
   clase?: Clase;
-  
-
 }
