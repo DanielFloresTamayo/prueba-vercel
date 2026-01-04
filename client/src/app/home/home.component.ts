@@ -1,6 +1,8 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HomeService } from './services/home.service';
+import { FeaturedTutor } from '../models/featured-tutor.dto';
 
 
 @Component({
@@ -13,14 +15,18 @@ import { RouterModule } from '@angular/router';
 })
 
 
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
+  featuredTutors: FeaturedTutor[] = [];
   runAnim = false;
 
-  ngOnInit() {
-    setTimeout(() => this.runAnim = true, 60);
-  }
+  constructor(private homeService: HomeService) { }
 
+  ngOnInit(): void {
+    this.runAnim = true;
+    this.homeService.getFeaturedTutors().subscribe(r => this.featuredTutors = r);
+  }
+  
 
 
   scrollTo(id: string) {
