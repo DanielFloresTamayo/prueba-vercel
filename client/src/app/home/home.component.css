@@ -486,3 +486,15 @@ button.secondary:hover {
     padding:22px;
   }
 }
+
+/* ===== ANIMACIÓN DE ENTRADA ===== */
+.animate-enter {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  transition: all 1s cubic-bezier(.22,.61,.36,1);
+}
+
+.animate-enter.run {
+  opacity: 1;
+  transform: none;
+}

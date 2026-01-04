@@ -11,7 +11,7 @@ import { FeaturedTutor } from '../models/featured-tutor.dto';
   imports: [CommonModule,
     RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 
 
