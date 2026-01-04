@@ -42,13 +42,9 @@
 
             "production": {
               "optimization": false,
-              "buildOptimizer": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
               "sourceMap": false,
-              
-
               "budgets": [
                 {
                   "type": "initial",
