@@ -22,11 +22,13 @@ export class HomeComponent implements OnInit {
 
   constructor(private homeService: HomeService) { }
 
-  ngOnInit(): void {
-    this.runAnim = true;
-    this.homeService.getFeaturedTutors().subscribe(r => this.featuredTutors = r);
-  }
+ngOnInit(): void {
   
+  setTimeout(() => {
+    this.runAnim = true;
+  }, 60); 
+  this.homeService.getFeaturedTutors().subscribe(r => this.featuredTutors = r);
+}
 
 
   scrollTo(id: string) {
