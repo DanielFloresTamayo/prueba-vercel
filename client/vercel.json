@@ -9,6 +9,7 @@
             }
         }
     ],
+    "framework": "angular",
     "outputDirectory": "dist/proyecto_final/browser",
     "rewrites": [
         {
