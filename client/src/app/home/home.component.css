@@ -430,3 +430,59 @@ button.secondary:hover {
     transform:translateX(-50%) translateY(0);
   }
 }
+/* ================= MOBILE FIX ================= */
+@media (max-width:640px){
+
+  .home{
+    padding:16px;
+    gap:60px;
+  }
+
+  /* NAVBAR */
+  .public-navbar{
+    flex-direction:column;
+    gap:14px;
+    padding:16px;
+    text-align:center;
+  }
+
+  .nav-links{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+  }
+
+  /* HERO */
+  .hero{
+    padding:48px 20px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  /* STEPS */
+  .steps{
+    gap:18px;
+  }
+
+  /* BENEFITS */
+  .benefits{
+    padding:36px 22px;
+  }
+
+  /* CTA */
+  .cta{
+    padding:52px 22px;
+  }
+
+  /* FOOTER */
+  .public-footer{
+    font-size:13px;
+    padding:22px;
+  }
+}
