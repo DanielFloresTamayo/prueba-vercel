@@ -40,8 +40,7 @@ export class HomeService {
                         citasCompletadas >= 1 &&
                         totalResenas >= 1 &&
                         ratingPromedio >= 1;
-                    console.log(tutor.nombres, citasCompletadas, totalResenas, ratingPromedio);
-
+                    
                     return <FeaturedTutor>{
                         tutor,
                         ratingPromedio,
