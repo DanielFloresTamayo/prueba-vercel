@@ -1,11 +1,11 @@
-<div class="home-wrapper">
+<div class="home-wrapper" id="top">
     <div class="home-container">
         <div class="home" [class.run]="runAnim">
 
             <nav class="public-navbar">
                 <div class="logo">Tutorías</div>
                 <ul class="nav-links">
-                    <li routerLink="/"><i class="bi bi-house-door"></i> Inicio</li>
+                    <li (click)="scrollTo('top')"><i class="bi bi-house-door"></i> Inicio</li>
                     <li (click)="scrollTo('featured-tutors')"><i class="bi bi-award"></i> Tutores</li>
                     <li (click)="scrollTo('how-it-works')"><i class="bi bi-question-circle"></i> ¿Cómo funciona?</li>
                 </ul>
