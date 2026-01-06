@@ -166,7 +166,7 @@ export class TutorCitasComponent implements OnInit {
     if (diffHoras < 1) return 'Hace unos minutos';
     if (diffHoras < 24) return `Hace ${diffHoras} horas`;
     if (diffDias === 1) return 'Hace 1 día';
-    return `Publicado hace ${diffDias} días`;
+    return `Solicitado hace ${diffDias} días`;
   }
 
 
