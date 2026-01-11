@@ -13,10 +13,10 @@ import { switchMap, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ParticipanteDashboardService {
-  private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/participantes'; // API de participantes
-  private apiUrlClases = 'https://grateful-essence-production-2233.up.railway.app/clases';
-  private apiUrlResenas = 'https://grateful-essence-production-2233.up.railway.app/resenas';
-  private apiUrlCitas = 'https://grateful-essence-production-2233.up.railway.app/citas';
+  private apiUrl = 'https://mi-json-backend.onrender.com/api/participantes'; // API de participantes
+  private apiUrlClases = 'https://mi-json-backend.onrender.com/api/clases';
+  private apiUrlResenas = 'https://mi-json-backend.onrender.com/api/resenas';
+  private apiUrlCitas = 'https://mi-json-backend.onrender.com/api/citas';
 
   constructor(private http: HttpClient) { }
 
