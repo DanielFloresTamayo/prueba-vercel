@@ -14,7 +14,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/usuarios';
+  private apiUrl = 'https://mi-json-backend.onrender.com/api/usuarios';
   private token: string | null = null;
 
   constructor(private http: HttpClient) {
