@@ -9,7 +9,7 @@ import { FeaturedTutor } from '../../models/featured-tutor.dto';
 @Injectable({ providedIn: 'root' })
 export class HomeService {
 
-    private api = 'https://mi-json-backend.onrender.com/api/';
+    private api = 'https://mi-json-backend.onrender.com/api';
 
     constructor(private http: HttpClient) { }
 
