@@ -8,9 +8,9 @@ import { Resena } from '../../models/resena.model';
   providedIn: 'root'
 })
 export class TutorDashboardService {
-  private apiUrl = 'https://grateful-essence-production-2233.up.railway.app/tutors'; // o "usuarios", según tu JSON Server
-  private apiUrlClases = 'https://grateful-essence-production-2233.up.railway.app/clases';
-  private apiUrlResenas = 'https://grateful-essence-production-2233.up.railway.app/resenas';
+  private apiUrl = 'https://mi-json-backend.onrender.com/api/tutors'; // o "usuarios", según tu JSON Server
+  private apiUrlClases = 'https://mi-json-backend.onrender.com/api/clases';
+  private apiUrlResenas = 'https://mi-json-backend.onrender.com/api/resenas';
 
   constructor(private http: HttpClient) { }
 
@@ -48,12 +48,12 @@ export class TutorDashboardService {
 
 
   getCitasByTutor(tutorId: number): Observable<any[]> {
-    return this.http.get<any[]>(`https://grateful-essence-production-2233.up.railway.app/citas?tutorId=${tutorId}&_expand=participante&_expand=clase`);
+    return this.http.get<any[]>(`https://mi-json-backend.onrender.com/api/citas?tutorId=${tutorId}&_expand=participante&_expand=clase`);
   }
 
 
   updateEstadoCita(id: number, estado: string): Observable<any> {
-    return this.http.patch(`https://grateful-essence-production-2233.up.railway.app/citas/${id}`, { estado });
+    return this.http.patch(`https://mi-json-backend.onrender.com/api/citas/${id}`, { estado });
   }
 
 

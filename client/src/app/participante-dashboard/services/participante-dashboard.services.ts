@@ -26,7 +26,7 @@ export class ParticipanteDashboardService {
   }
   // 🔹 Obtener información del tutor por ID
   getTutorById(id: string) {
-    return this.http.get<any>(`https://grateful-essence-production-2233.up.railway.app/tutors/${id}`);
+    return this.http.get<any>(`https://mi-json-backend.onrender.com/api/tutors/${id}`);
   }
 
   
