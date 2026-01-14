@@ -45,6 +45,8 @@
     transform 0.28s ease,
     box-shadow 0.35s ease,
     background 0.35s ease;
+
+  
 }
 
 .clase-card:hover {
@@ -60,11 +62,13 @@
     transform: translateY(14px) scale(0.96);
     filter: blur(6px);
   }
+
   70% {
     opacity: 1;
     transform: translateY(0) scale(1.02);
     filter: blur(0);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -86,7 +90,8 @@
 .avatar {
   width: 120px;
   height: 120px;
-  border-radius: 12px; /* Rectangular elegante como en citas */
+  border-radius: 12px;
+  /* Rectangular elegante como en citas */
   object-fit: cover;
   border: 3px solid #d0e3ff;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
@@ -172,9 +177,20 @@
   text-transform: capitalize;
 }
 
-.estado.aprobado { background: #d9f5dd; color: #2e7d32; }
-.estado.pendiente { background: #fff2cc; color: #b26a00; }
-.estado.rechazado { background: #ffd6d6; color: #c62828; }
+.estado.aprobado {
+  background: #d9f5dd;
+  color: #2e7d32;
+}
+
+.estado.pendiente {
+  background: #fff2cc;
+  color: #b26a00;
+}
+
+.estado.rechazado {
+  background: #ffd6d6;
+  color: #c62828;
+}
 
 /* ===============================
    RESPONSIVE
@@ -234,3 +250,108 @@
 .btn-resena i {
   font-size: 16px;
 }
+
+.sticker-resena {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 22px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  user-select: none;
+  animation: fadeInSticker .5s ease forwards;
+}
+
+.sticker-resena i {
+  font-size: 1.1rem;
+}
+
+@keyframes fadeInSticker {
+  from {
+    opacity: 0;
+    transform: scale(.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.resena-preview {
+  background: rgba(13, 110, 253, 0.08);
+  border-left: 5px solid #0d6efd;
+  padding: 14px 18px;
+  border-radius: 16px;
+  margin-top: 16px;
+  animation: fadeIn .4s ease;
+}
+
+.resena-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #0d6efd;
+  margin-bottom: 8px;
+}
+
+.resena-texto {
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.resena-footer {
+  text-align: right;
+  font-weight: 600;
+  color: #6610f2;
+  margin-top: 8px;
+}
+.resena-preview {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f7faff, #eef3ff);
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+
+  animation: resenaIn .35s cubic-bezier(.4,0,.2,1);
+  transform-origin: top;
+}
+
+@keyframes resenaIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Botón sticker */
+.sticker-resena {
+  background: linear-gradient(135deg,#38bdf8,#2563eb);
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.sticker-resena:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,99,235,.35);
+}
+

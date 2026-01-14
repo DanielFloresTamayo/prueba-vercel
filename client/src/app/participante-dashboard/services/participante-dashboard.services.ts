@@ -9,53 +9,56 @@ import { switchMap, map } from 'rxjs/operators';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipanteDashboardService {
-  private apiUrl = 'https://mi-json-backend.onrender.com/api/participantes'; // API de participantes
-  private apiUrlClases = 'https://mi-json-backend.onrender.com/api/clases';
-  private apiUrlResenas = 'https://mi-json-backend.onrender.com/api/resenas';
-  private apiUrlCitas = 'https://mi-json-backend.onrender.com/api/citas';
+  private apiUrl = 'http://localhost:3000/participantes'; // API de participantes
+  private apiUrlClases = 'http://localhost:3000/clases';
+  private apiUrlResenas = 'http://localhost:3000/resenas';
+  private apiUrlCitas = 'http://localhost:3000/citas';
 
   constructor(private http: HttpClient) { }
 
-  
+  // ✅ Obtener participante por ID
   getParticipanteById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
   // 🔹 Obtener información del tutor por ID
   getTutorById(id: string) {
-    return this.http.get<any>(`https://mi-json-backend.onrender.com/api/tutors/${id}`);
+    return this.http.get<any>(`http://localhost:3000/tutors/${id}`);
   }
 
-  
+  // ✅ Actualizar contraseña del participante
   updateParticipantePassword(id: number, hashedPassword: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}`, { contrasena: hashedPassword });
   }
 
- 
+  // 🔹 Obtener todas las clases con la información del tutor expandida
   getClasesConTutor(): Observable<Clase[]> {
     return this.http.get<Clase[]>(`${this.apiUrlClases}?_expand=tutor`);
   }
 
 
 
-    getClasesByParticipante(participanteId: number): Observable<Clase[]> {
+  // 🔹 Obtener clases inscritas por participante (opcional)
+  getClasesByParticipante(participanteId: number): Observable<Clase[]> {
     return this.http.get<Clase[]>(`${this.apiUrlClases}?participanteId=${participanteId}`);
   }
 
 
+  // 🔹 Obtener reseñas del participante
   getResenasByParticipante(participanteId: number): Observable<Resena[]> {
     return this.http.get<Resena[]>(`${this.apiUrlResenas}?participanteId=${participanteId}`);
   }
 
-
+  // 🔹 Crear reseña (POST)
   createResena(data: Resena): Observable<Resena> {
     return this.http.post<Resena>(this.apiUrlResenas, data);
   }
 
- 
+  // 🔹 Actualizar reseña (PATCH)
   updateResena(id: number, data: Partial<Resena>): Observable<Resena> {
     return this.http.patch<Resena>(`${this.apiUrlResenas}/${id}`, data);
   }
@@ -87,7 +90,7 @@ export class ParticipanteDashboardService {
   cancelarCita(idCita: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlCitas}/${idCita}`);
   }
-  //  Marcar cita como reseñada
+  // 🔹 Marcar cita como reseñada
   updateCitaTieneResena(citaId: number): Observable<Cita> {
     return this.http.patch<Cita>(`${this.apiUrlCitas}/${citaId}`, {
       tieneResena: true
@@ -96,40 +99,44 @@ export class ParticipanteDashboardService {
 
   crearCitaConValidacion(cita: Cita): Observable<Cita> {
 
-  const ESTADOS_ACTIVOS = ['pendiente', 'aceptada'];
-  const MAX_CITAS_ACTIVAS = 3;
+    const ESTADOS_ACTIVOS = ['pendiente', 'aceptada'];
+    const MAX_CITAS_ACTIVAS = 3;
 
-  return this.getCitasByParticipante(cita.participanteId).pipe(
-    map((citas) => {
+    return this.getCitasByParticipante(cita.participanteId).pipe(
+      map((citas) => {
 
-  const activas = citas.filter(c =>
-    ESTADOS_ACTIVOS.includes(c.estado)
-  );
+        const activas = citas.filter(c =>
+          ESTADOS_ACTIVOS.includes(c.estado)
+        );
 
-  
-  if (activas.length >= MAX_CITAS_ACTIVAS) {
-    throw new Error(
-      `Has alcanzado el límite de ${MAX_CITAS_ACTIVAS} citas. Completa una para poder agendar otra.`
+
+        if (activas.length >= MAX_CITAS_ACTIVAS) {
+          throw new Error(
+            `Has alcanzado el límite de ${MAX_CITAS_ACTIVAS} citas. Completa una para poder agendar otra.`
+          );
+        }
+
+
+        const citaDuplicada = activas.some(c =>
+          c.claseId === cita.claseId
+        );
+
+        if (citaDuplicada) {
+          throw new Error(
+            'Ya tienes una cita para esta clase.'
+          );
+        }
+
+        return true;
+      }),
+
+      switchMap(() => this.crearCita(cita))
     );
   }
 
-  
-  const citaDuplicada = activas.some(c =>
-    c.claseId === cita.claseId
-  );
 
-  if (citaDuplicada) {
-    throw new Error(
-      'Ya tienes una cita para esta clase.'
-    );
+  getResenaByCita(citaId: number) {
+    return this.http.get<Resena[]>(`${this.apiUrlResenas}?citaId=${citaId}`);
   }
 
-  return true;
-}),
-
-    switchMap(() => this.crearCita(cita))
-  );
-}
-
-  
 }

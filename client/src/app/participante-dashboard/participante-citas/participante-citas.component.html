@@ -75,14 +75,42 @@
           </div>
 
         </div>
+
         <!-- Acción: Dejar reseña -->
-        <div class="acciones" *ngIf="puedeDejarResena(cita)">
-          <button class="btn-resena"
-          (click)="irAResena(cita.id!)">
+        <div class="acciones">
+
+          <!-- Botón cuando NO tiene reseña -->
+          <button class="btn-resena" *ngIf="puedeDejarResena(cita)" (click)="irAResena(cita.id!)">
             <i class="bi bi-chat-left-text"></i>
             Dejar reseña
           </button>
+
+          <button class="sticker-resena" *ngIf="cita.estado === 'completada' && cita.tieneResena"
+            (click)="toggleResena(cita.id!)">
+
+            <i class="bi bi-check-circle-fill"></i>
+            Ver reseña
+          </button>
+
+
         </div>
+       <div *ngIf="resenaVisible[cita.id!]" class="resena-preview">
+
+          <div class="resena-header">
+            <i class="bi bi-chat-quote-fill"></i>
+            <span>Tu reseña</span>
+          </div>
+
+          <p class="resena-texto">
+            "{{ resenasMap[cita.id!].comentario }}"
+          </p>
+
+          <div class="resena-footer">
+            <i class="bi bi-star-fill"></i>
+            ⭐ {{ resenasMap[cita.id!].rating || 5 }}/5
+          </div>
+        </div>
+
 
 
 
