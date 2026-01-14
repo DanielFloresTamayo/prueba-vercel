@@ -14,10 +14,10 @@ import { switchMap, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ParticipanteDashboardService {
-  private apiUrl = 'http://localhost:3000/participantes'; // API de participantes
-  private apiUrlClases = 'http://localhost:3000/clases';
-  private apiUrlResenas = 'http://localhost:3000/resenas';
-  private apiUrlCitas = 'http://localhost:3000/citas';
+  private apiUrl = 'https://mi-json-backend.onrender.com/api/participantes'; // API de participantes
+  private apiUrlClases = 'https://mi-json-backend.onrender.com/api/clases';
+  private apiUrlResenas = 'https://mi-json-backend.onrender.com/api/resenas';
+  private apiUrlCitas = 'https://mi-json-backend.onrender.com/api/citas';
 
   constructor(private http: HttpClient) { }
 
