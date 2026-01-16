@@ -1,8 +1,11 @@
 {
- 
     "framework": "angular",
     "outputDirectory": "dist/proyecto_final/browser",
     "rewrites": [
+        {
+            "source": "/loaderio-a6fa5c4d467a2a95314f637eadd081bd.txt",
+            "destination": "/loaderio-a6fa5c4d467a2a95314f637eadd081bd.txt"
+        },
         {
             "source": "/(.*)",
             "destination": "/index.html"
