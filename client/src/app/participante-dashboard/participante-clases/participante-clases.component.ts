@@ -41,19 +41,22 @@ export class ParticipanteClasesComponent implements OnInit {
     setTimeout(() => rippleSpan.remove(), 600);
   }
 
-  getFechaRelativa(fecha: string): string {
-    const fechaPublicacion = new Date(fecha);
-    const ahora = new Date();
+getFechaRelativa(fecha: string): string {
+  const fechaPublicacion = new Date(fecha);
+  const ahora = new Date();
 
-    const diffMs = ahora.getTime() - fechaPublicacion.getTime();
-    const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDias = Math.floor(diffHoras / 24);
+  const diffMs = ahora.getTime() - fechaPublicacion.getTime();
+  const diffMinutos = Math.floor(diffMs / (1000 * 60));
+  const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    if (diffHoras < 1) return 'Publicado hace unos minutos';
-    if (diffHoras < 24) return `Publicado hace ${diffHoras} horas`;
-    if (diffDias === 1) return 'Publicado hace 1 día';
-    return `Publicado hace ${diffDias} días`;
-  }
+  if (diffMinutos < 1) return 'Publicado hace unos segundos';
+  if (diffMinutos < 60) return `Publicado hace ${diffMinutos} minutos`;
+  if (diffHoras === 1) return 'Publicado hace 1 hora';
+  if (diffHoras < 24) return `Publicado hace ${diffHoras} horas`;
+  if (diffDias === 1) return 'Publicado hace 1 día';
+  return `Publicado hace ${diffDias} días`;
+}
 
   ngOnInit(): void {
 

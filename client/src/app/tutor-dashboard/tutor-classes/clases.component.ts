@@ -224,7 +224,7 @@ export class ClasesComponent implements OnInit {
       titulo: this.clase.titulo!,
       materia: this.clase.materia!,
       descripcion: this.clase.descripcion!,
-      fechaPublicacion: new Date().toISOString().split('T')[0]
+      fechaPublicacion: new Date().toISOString()
     };
 
     this.tutorService.createClase(nuevaClase).subscribe({
