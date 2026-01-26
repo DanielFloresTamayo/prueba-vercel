@@ -58,6 +58,7 @@ getFechaRelativa(fecha: string): string {
   return `Publicado hace ${diffDias} días`;
 }
 
+
   ngOnInit(): void {
 
     const usuarioData = JSON.parse(localStorage.getItem('usuario')!);
