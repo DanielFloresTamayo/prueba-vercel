@@ -18,12 +18,12 @@
           <!-- Título -->
           <div class="form-group">
             <label for="titulo"><i class="bi bi-type"></i> Título de la clase</label>
-            <input type="text" id="titulo" name="titulo" [(ngModel)]="clase.titulo" required minlength="10"
-              maxlength="400" placeholder="Ejemplo: MRUV para principiantes" #titulo="ngModel" />
+            <input type="text" id="titulo" name="titulo" [(ngModel)]="clase.titulo" required minlength="2"
+              maxlength="100" placeholder="Ejemplo: MRUV para principiantes" #titulo="ngModel" />
             <div class="error" *ngIf="titulo.invalid && titulo.touched">
               <small *ngIf="titulo.errors?.['required']">El título es obligatorio.</small>
-              <small *ngIf="titulo.errors?.['minlength']">Debe tener al menos 10 caracteres.</small>
-              <small *ngIf="titulo.errors?.['maxlength']">No puede superar los 400 caracteres.</small>
+              <small *ngIf="titulo.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+              <small *ngIf="titulo.errors?.['maxlength']">No puede superar los 100 caracteres.</small>
             </div>
           </div>
 
@@ -44,11 +44,11 @@
         <div class="form-group">
           <label for="descripcion"><i class="bi bi-card-text"></i> Descripción</label>
           <textarea id="descripcion" name="descripcion" [(ngModel)]="clase.descripcion" required minlength="2"
-            maxlength="350" placeholder="Describe brevemente tu clase" #descripcion="ngModel"></textarea>
+            maxlength="250" placeholder="Describe brevemente tu clase" #descripcion="ngModel"></textarea>
           <div class="error" *ngIf="descripcion.invalid && descripcion.touched">
             <small *ngIf="descripcion.errors?.['required']">La descripción es obligatoria.</small>
             <small *ngIf="descripcion.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
-            <small *ngIf="descripcion.errors?.['maxlength']">No puede superar los 350 caracteres.</small>
+            <small *ngIf="descripcion.errors?.['maxlength']">No puede superar los 250 caracteres.</small>
           </div>
         </div>
 
